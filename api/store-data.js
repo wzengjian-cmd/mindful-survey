@@ -27,9 +27,7 @@ export default async function handler(req, res) {
             // 返回成功响应
             res.json({ 
                 success: true, 
-                message: '数据保存成功',
-                count: submissions.length,
-                id: submissions.length
+                message: '数据提交成功'
             });
 
         } else if (req.method === 'GET') {
