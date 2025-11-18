@@ -706,9 +706,149 @@
         
 
         
+        // 查看数据功能
+        function viewData() {
+            const storedData = localStorage.getItem('mindfulSurveyData');
+            const data = storedData ? JSON.parse(storedData) : [];
+            
+            if (data.length === 0) {
+                alert('暂无数据，请先填写问卷');
+                return;
+            }
+
+            let tableHtml = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; padding: 20px;">
+                    <div style="background: white; margin: 50px auto; max-width: 1000px; padding: 30px; border-radius: 10px; max-height: 80vh; overflow-y: auto;">
+                        <h2 style="text-align: center; margin-bottom: 20px;">📊 数据查看</h2>
+                        <p style="text-align: center; margin-bottom: 20px;">共 ${data.length} 条记录</p>
+                        <button onclick="this.parentElement.parentElement.remove()" style="float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">关闭</button>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 30px;">
+                            <thead>
+                                <tr style="background: #3498db; color: white;">
+                                    <th style="padding: 10px; border: 1px solid #ddd;">序号</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">姓名</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">电话</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">状态分</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">特质分</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">总分</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">结果</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+
+            data.forEach((item, index) => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const total = stateTotal + traitTotal;
+                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+
+                tableHtml += `
+                    <tr style="${isEligible ? 'background: #d4edda;' : 'background: #fff3cd;'}">
+                        <td style="padding: 10px; border: 1px solid #ddd;">${index + 1}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${item.name || '未知'}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${item.phone || '未填写'}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${stateTotal}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${traitTotal}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>${total}</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${isEligible ? '✅ 符合条件' : '⏳ 待观察'}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${item.timestamp ? new Date(item.timestamp).toLocaleString() : '未知'}</td>
+                    </tr>
+                `;
+            });
+
+            tableHtml += `
+                            </tbody>
+                        </table>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button onclick="exportBrowserData()" style="background: #27ae60; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; margin: 5px;">📥 导出Excel</button>
+                            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #e74c3c; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; margin: 5px;">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', tableHtml);
+        }
+
+        // 导出浏览器数据
+        function exportBrowserData() {
+            const storedData = localStorage.getItem('mindfulSurveyData');
+            const data = storedData ? JSON.parse(storedData) : [];
+            
+            if (data.length === 0) {
+                alert('暂无数据可导出');
+                return;
+            }
+
+            let csv = '序号,姓名,电话,状态焦虑分,特质焦虑分,总分,评估结果,提交时间
+';
+            
+            data.forEach((item, index) => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const total = stateTotal + traitTotal;
+                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+                
+                csv += `${index + 1},"${item.name || ''}","${item.phone || ''}",${stateTotal},${traitTotal},${total},"${isEligible ? '符合条件' : '待观察'}","${item.timestamp || ''}"
+`;
+            });
+
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `正念训练营数据_${new Date().toLocaleDateString()}.csv`;
+            link.click();
+        }
+
+        // 添加查看数据按钮
+        function addDataButton() {
+            const btn = document.createElement('button');
+            btn.textContent = '📊 查看数据';
+            btn.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; z-index: 1000;';
+            btn.onclick = viewData;
+            document.body.appendChild(btn);
+        }
+
         // 初始化页面
         document.addEventListener('DOMContentLoaded', function() {
             updateProgressBar(1);
+            addDataButton();
+            
+            // 检查是否有数据，如果有则显示测试数据
+            const storedData = localStorage.getItem('mindfulSurveyData');
+            if (!storedData) {
+                // 添加测试数据
+                const testData = [
+                    {
+                        name: "wzj",
+                        phone: "13710077285",
+                        stateAnxietyScores: [3, 3, 3, 3, 3],
+                        traitAnxietyScores: [3, 3, 3, 3, 3],
+                        timestamp: "2025-11-18T15:23:49.731Z",
+                        ip: "::1"
+                    },
+                    {
+                        name: "wzj",
+                        phone: "13710077285",
+                        stateAnxietyScores: [3, 3, 3, 3, 3],
+                        traitAnxietyScores: [3, 3, 3, 3, 3],
+                        timestamp: "2025-11-18T15:27:16.699Z",
+                        ip: "::1"
+                    },
+                    {
+                        name: "wzj",
+                        phone: "13710077285",
+                        stateAnxietyScores: [3, 3, 3, 3, 3],
+                        traitAnxietyScores: [3, 3, 3, 3, 3],
+                        timestamp: "2025-11-18T15:53:53.923Z",
+                        ip: "::1"
+                    }
+                ];
+                localStorage.setItem('mindfulSurveyData', JSON.stringify(testData));
+                console.log('已添加测试数据');
+            }
         });
     </script>
 </body>
