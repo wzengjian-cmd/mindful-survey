@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据查看页面</title>
+    <style>
+        body { 
+            font-family: "Microsoft YaHei", sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #f5f7fa; 
+        }
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            background-color: white; 
+            padding: 30px; 
+            border-radius: 10px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.05); 
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 30px; 
+            padding-bottom: 20px; 
+            border-bottom: 2px solid #3498db; 
+        }
+        .stats { 
+            display: flex; 
+            justify-content: space-around; 
+            margin-bottom: 30px; 
+            flex-wrap: wrap; 
+        }
+        .stat-card { 
+            text-align: center; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            border-radius: 10px; 
+            min-width: 150px; 
+            margin: 10px; 
+        }
+        .stat-number { 
+            font-size: 2.5em; 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+        }
+        .stat-label { 
+            font-size: 0.9em; 
+            opacity: 0.9; 
+        }
+        .controls { 
+            text-align: center; 
+            margin-bottom: 20px; 
+        }
+        .btn { 
+            padding: 12px 25px; 
+            background-color: #3498db; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            margin: 5px; 
+        }
+        .btn:hover { 
+            background-color: #2980b9; 
+        }
+        .export-btn { 
+            background-color: #27ae60; 
+        }
+        .export-btn:hover { 
+            background-color: #229954; 
+        }
+        .table-container { 
+            overflow-x: auto; 
+            margin-top: 20px; 
+        }
+        .data-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            min-width: 800px; 
+        }
+        .data-table th, .data-table td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #ddd; 
+        }
+        .data-table th { 
+            background-color: #3498db; 
+            color: white; 
+            font-weight: bold; 
+        }
+        .data-table tr:nth-child(even) { 
+            background-color: #f8f9fa; 
+        }
+        .eligible { 
+            background-color: #d4edda !important; 
+            color: #155724; 
+        }
+        .not-eligible { 
+            background-color: #fff3cd !important; 
+            color: #856404; 
+        }
+        .info { 
+            background-color: #d1ecf1; 
+            color: #0c5460; 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin-bottom: 20px; 
+            text-align: center; 
+            border-left: 4px solid #17a2b8; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 数据查看页面</h1>
+            <p>正念训练营报名数据 - 当前显示3条测试记录</p>
+        </div>
+
+        <div class="info">
+            📋 当前显示的是测试数据，新提交的数据会实时更新
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalCount">3</div>
+                <div class="stat-label">总人数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="eligibleCount">3</div>
+                <div class="stat-label">符合条件</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="notEligibleCount">0</div>
+                <div class="stat-label">待观察</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="refreshData()">🔄 刷新数据</button>
+            <button class="btn export-btn" onclick="exportData()">📥 导出Excel</button>
+            <button class="btn" onclick="window.open('/', '_blank')">📋 返回报名表</button>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>电话</th>
+                        <th>状态焦虑分</th>
+                        <th>特质焦虑分</th>
+                        <th>总分</th>
+                        <th>评估结果</th>
+                        <th>提交时间</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTableBody">
+                    <!-- 数据将通过JavaScript动态加载 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 内嵌数据 - 不依赖API
+        let allData = [
+            {
+                "name": "wzj",
+                "phone": "13710077285",
+                "stateAnxietyScores": [3, 3, 3, 3, 3],
+                "traitAnxietyScores": [3, 3, 3, 3, 3],
+                "timestamp": "2025-11-18T15:23:49.731Z",
+                "ip": "::1"
+            },
+            {
+                "name": "wzj",
+                "phone": "13710077285",
+                "stateAnxietyScores": [3, 3, 3, 3, 3],
+                "traitAnxietyScores": [3, 3, 3, 3, 3],
+                "timestamp": "2025-11-18T15:27:16.699Z",
+                "ip": "::1"
+            },
+            {
+                "name": "wzj",
+                "phone": "13710077285",
+                "stateAnxietyScores": [3, 3, 3, 3, 3],
+                "traitAnxietyScores": [3, 3, 3, 3, 3],
+                "timestamp": "2025-11-18T15:53:53.923Z",
+                "ip": "::1"
+            }
+        ];
+
+        // 页面加载时显示数据
+        window.addEventListener('DOMContentLoaded', function() {
+            updateDisplay();
+        });
+
+        // 尝试从服务器获取新数据
+        async function refreshData() {
+            try {
+                const response = await fetch('/api/store-data', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success && result.data && result.data.length > 0) {
+                        // 合并数据（去重）
+                        const newData = result.data;
+                        const existingNames = allData.map(item => item.name + item.timestamp);
+                        const uniqueNewData = newData.filter(item => 
+                            !existingNames.includes(item.name + item.timestamp)
+                        );
+                        
+                        if (uniqueNewData.length > 0) {
+                            allData = [...allData, ...uniqueNewData];
+                            console.log('获取到', uniqueNewData.length, '条新数据');
+                        } else {
+                            console.log('没有新数据');
+                        }
+                    }
+                }
+            } catch (error) {
+                console.log('从服务器获取数据失败，使用本地数据:', error);
+            }
+
+            updateDisplay();
+        }
+
+        // 更新显示
+        function updateDisplay() {
+            updateStats();
+            updateTable();
+        }
+
+        // 更新统计数据
+        function updateStats() {
+            const totalCount = allData.length;
+            const eligibleCount = allData.filter(item => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                return stateTotal >= 10 && traitTotal >= 14;
+            }).length;
+            const notEligibleCount = totalCount - eligibleCount;
+
+            document.getElementById('totalCount').textContent = totalCount;
+            document.getElementById('eligibleCount').textContent = eligibleCount;
+            document.getElementById('notEligibleCount').textContent = notEligibleCount;
+        }
+
+        // 更新表格
+        function updateTable() {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = '';
+
+            allData.forEach((item, index) => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const total = stateTotal + traitTotal;
+                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+
+                const row = document.createElement('tr');
+                row.className = isEligible ? 'eligible' : 'not-eligible';
+                
+                row.innerHTML = `
+                    <td><strong>${index + 1}</strong></td>
+                    <td><strong>${item.name || '未知'}</strong></td>
+                    <td>${item.phone || '未填写'}</td>
+                    <td>${stateTotal}</td>
+                    <td>${traitTotal}</td>
+                    <td><strong>${total}</strong></td>
+                    <td>${isEligible ? '✅ 符合条件' : '⏳ 待观察'}</td>
+                    <td>${item.timestamp ? new Date(item.timestamp).toLocaleString() : '未知'}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+
+            if (allData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 40px;">暂无数据</td></tr>';
+            }
+        }
+
+        // 导出数据
+        function exportData() {
+            if (allData.length === 0) {
+                alert('暂无数据可导出');
+                return;
+            }
+
+            let csv = '序号,姓名,电话,状态焦虑分,特质焦虑分,总分,评估结果,提交时间\n';
+            
+            allData.forEach((item, index) => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const total = stateTotal + traitTotal;
+                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+                
+                csv += `${index + 1},"${item.name || ''}","${item.phone || ''}",${stateTotal},${traitTotal},${total},"${isEligible ? '符合条件' : '待观察'}","${item.timestamp || ''}"\n`;
+            });
+
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `正念训练营数据_${new Date().toLocaleDateString()}.csv`;
+            link.click();
+        }
+    </script>
+</body>
+</html>
