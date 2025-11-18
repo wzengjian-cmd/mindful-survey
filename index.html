@@ -257,47 +257,7 @@
             opacity: 0.9;
         }
         
-        .qr-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .qr-modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-        }
-        
-        .qr-modal img {
-            width: 200px;
-            height: 200px;
-            margin-bottom: 20px;
-        }
-        
-        .close-modal {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        .close-modal:hover {
-            background-color: #c0392b;
-        }
+
     </style>
 </head>
 <body>
@@ -739,43 +699,25 @@
                     <div class="contact-grid">
                         <!-- 微信二维码区域 -->
                         <div class="qr-section">
-                            <h4 style="color: #2c3e50; margin-bottom: 15px;">💬 微信扫码加入</h4>
+                            <h4 style="color: #2c3e50; margin-bottom: 15px;">💬 微信扫码</h4>
                             <div class="qr-container">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://weixin.qq.com/r/your-qr-code-url" 
+                                <img src="wechat-qr.svg" 
                                      alt="微信二维码" 
-                                     style="width: 150px; height: 150px; border: 2px solid #3498db; border-radius: 8px; margin-bottom: 10px; cursor: pointer;"
-                                     onclick="showQRCodeLarge()"
-                                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjRjhGOUZBIi8+Cjx0ZXh0IHg9Ijc1IiB5PSI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzMzMyI+5L2g5aW9PC90ZXh0Pgo8L3N2Zz4K';">
-                                <div style="font-size: 14px; color: #666;">扫码添加项目负责人</div>
+                                     style="width: 150px; height: 150px; border: 2px solid #4cd964; border-radius: 8px; margin-bottom: 10px;">
+                                <div style="font-size: 14px; color: #666;">扫码添加微信</div>
                             </div>
                         </div>
                         
                         <!-- 电话联系区域 -->
                         <div class="phone-section">
-                            <h4 style="color: #2c3e50; margin-bottom: 15px;">📞 电话联系</h4>
+                            <h4 style="color: #2c3e50; margin-bottom: 15px;">📞 联系电话</h4>
                             <a href="tel:13925337675" style="text-decoration: none; color: inherit;">
-                                <div class="phone-card" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; padding: 20px; border-radius: 10px; text-align: center;">
-                                    <div style="font-size: 32px; margin-bottom: 10px;">📱</div>
-                                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">13925337675</div>
-                                    <div style="font-size: 14px; opacity: 0.9;">拨打项目负责人电话</div>
+                                <div class="phone-card" style="background: linear-gradient(135deg, #4cd964 0%, #44bd32 100%); color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                                    <div style="font-size: 20px; font-weight: bold;">13925337675</div>
+                                    <div style="font-size: 14px; opacity: 0.9; margin-top: 5px;">点击拨打电话</div>
                                 </div>
                             </a>
                         </div>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 25px;">
-                        <button onclick="copyPhoneNumber()" class="btn" style="background-color: #27ae60; margin: 5px;">
-                            📋 复制电话号码
-                        </button>
-                        <button onclick="showContactGuide()" class="btn" style="background-color: #3498db; margin: 5px;">
-                            💡 联系方式说明
-                        </button>
-                    </div>
-                    
-                    <div style="margin-top: 20px; padding: 15px; background-color: #e8f4fd; border-radius: 8px; border-left: 4px solid #3498db;">
-                        <p style="margin: 0; color: #0c5460; font-size: 14px;">
-                            <strong>📞 温馨提示：</strong>建议尽快联系我们，我们会根据您的情况安排最适合的训练方案。
-                        </p>
                     </div>
                 `;
             } else {
@@ -795,13 +737,9 @@
                 
                 contactInfo.innerHTML = `
                     <div style="text-align: center; padding: 20px; background-color: #e8f4fd; border-radius: 10px;">
-                        <h4 style="color: #2c3e50; margin-bottom: 15px;">📞 如有任何疑问</h4>
                         <a href="tel:13925337675" class="btn" style="background-color: #3498db;">
-                            📞 联系项目负责人
+                            📞 13925337675
                         </a>
-                        <p style="margin-top: 15px; color: #666; font-size: 14px;">
-                            工作时间：周一至周五 9:00-18:00
-                        </p>
                     </div>
                 `;
             }
@@ -835,98 +773,7 @@
             showPage(1);
         }
         
-        // 复制电话号码功能
-        function copyPhoneNumber() {
-            const phone = '13925337675';
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(phone).then(() => {
-                    alert('✅ 电话号码已复制到剪贴板！');
-                }).catch(() => {
-                    fallbackCopyText(phone);
-                });
-            } else {
-                fallbackCopyText(phone);
-            }
-        }
-        
-        // 备用复制方法
-        function fallbackCopyText(text) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-            alert('✅ 电话号码已复制！');
-        }
-        
-        // 显示联系方式说明
-        function showContactGuide() {
-            const guideMessage = `
-📞 联系项目负责人方式：
 
-【微信联系】
-1. 扫描二维码添加项目负责人微信
-2. 发送"正念训练营咨询"
-3. 我们会安排专业老师与您沟通
-
-【电话联系】
-1. 拨打项目负责人电话：13925337675
-2. 说明是正念训练营相关咨询
-3. 工作时间：周一至周五 9:00-18:00
-
-📝 建议先微信联系，方便发送详细资料和安排时间。
-            `;
-            alert(guideMessage);
-        }
-        
-        // 显示大二维码
-        function showQRCodeLarge() {
-            // 创建模态框
-            const modal = document.createElement('div');
-            modal.className = 'qr-modal';
-            modal.style.cssText = `
-                display: flex;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0,0,0,0.8);
-                z-index: 1000;
-                justify-content: center;
-                align-items: center;
-            `;
-            
-            modal.innerHTML = `
-                <div class="qr-modal-content">
-                    <h3 style="color: #2c3e50; margin-bottom: 20px;">📱 扫码添加微信</h3>
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://weixin.qq.com/r/your-qr-code-url" 
-                         alt="微信二维码" 
-                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjhGOUZBIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2IiBmaWxsPSIjMzMzIj7kuajmnbTmnaE8L3RleHQ+Cjwvc3ZnPgo=';">
-                    <p style="margin: 15px 0; color: #666;">请使用微信扫一扫功能扫描此二维码</p>
-                    <p style="margin: 10px 0; color: #3498db; font-weight: bold;">添加好友时请备注：正念训练营</p>
-                    <button class="close-modal" onclick="closeQRModal()">关闭</button>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-        }
-        
-        // 关闭二维码模态框
-        function closeQRModal() {
-            const modal = document.querySelector('.qr-modal');
-            if (modal) {
-                modal.remove();
-            }
-        }
-        
-        // 点击模态框外部关闭
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('qr-modal')) {
-                closeQRModal();
-            }
-        });
         
         // 初始化页面
         document.addEventListener('DOMContentLoaded', function() {
