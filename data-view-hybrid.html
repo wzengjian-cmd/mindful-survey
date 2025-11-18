@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据查看页面</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+        }
+        .btn {
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .export-btn {
+            background-color: #27ae60;
+        }
+        .export-btn:hover {
+            background-color: #229954;
+        }
+        .refresh-btn {
+            background-color: #f39c12;
+        }
+        .refresh-btn:hover {
+            background-color: #e67e22;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            min-width: 150px;
+            margin: 10px;
+            flex: 1;
+        }
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        .data-table th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        .data-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .eligible {
+            background-color: #d4edda !important;
+            color: #155724;
+        }
+        .not-eligible {
+            background-color: #fff3cd !important;
+            color: #856404;
+        }
+        .message {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 18px;
+        }
+        .data-source {
+            background-color: #e8f4fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 数据查看页面</h1>
+            <p>实时查看所有提交的数据</p>
+        </div>
+
+        <div id="message" class="message" style="display: none;"></div>
+
+        <div class="data-source" id="dataSource">
+            📡 正在检测数据源...
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">总人数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="eligibleCount">0</div>
+                <div class="stat-label">符合条件</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="notEligibleCount">0</div>
+                <div class="stat-label">待观察</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button class="btn refresh-btn" onclick="loadData()">🔄 刷新数据</button>
+            <button class="btn export-btn" onclick="exportData()">📥 导出数据</button>
+            <button class="btn" onclick="window.open('/', '_blank')">📋 返回报名表</button>
+            <button class="btn" onclick="clearLocalData()" style="background-color: #e74c3c;">🗑️ 清除缓存</button>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>电话</th>
+                        <th>状态焦虑分</th>
+                        <th>特质焦虑分</th>
+                        <th>总分</th>
+                        <th>评估结果</th>
+                        <th>提交时间</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTableBody">
+                    <!-- 数据将在这里动态加载 -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="emptyMessage" class="empty-message" style="display: none;">
+            <h3>📋 暂无数据</h3>
+            <p>请先让学生填写问卷</p>
+            <a href="/" class="btn">📋 去填写数据</a>
+        </div>
+    </div>
+
+    <script>
+        let allData = [];
+
+        // 页面加载时获取数据
+        window.addEventListener('DOMContentLoaded', function() {
+            loadData();
+        });
+
+        // 加载数据 - 多重数据源
+        async function loadData() {
+            showMessage('正在加载数据...', 'info');
+            document.getElementById('dataSource').textContent = '📡 正在检测数据源...';
+            
+            let dataLoaded = false;
+            let source = '';
+
+            try {
+                // 1. 尝试API获取
+                const apiResponse = await fetch('/api/store-data', { 
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (apiResponse.ok) {
+                    const result = await apiResponse.json();
+                    console.log('API响应:', result);
+                    
+                    if (result.success && result.data && Array.isArray(result.data)) {
+                        allData = result.data;
+                        dataLoaded = true;
+                        source = '🌐 服务器API数据';
+                        showMessage(`✅ 从服务器加载 ${allData.length} 条数据`, 'success');
+                    }
+                }
+            } catch (apiError) {
+                console.log('API加载失败:', apiError);
+            }
+
+            // 2. 尝试本地文件
+            if (!dataLoaded) {
+                try {
+                    const fileResponse = await fetch('data/submissions.json');
+                    if (fileResponse.ok) {
+                        const fileData = await fileResponse.json();
+                        if (Array.isArray(fileData) && fileData.length > 0) {
+                            allData = fileData;
+                            dataLoaded = true;
+                            source = '📁 本地文件数据';
+                            showMessage(`✅ 从本地文件加载 ${allData.length} 条数据`, 'success');
+                        }
+                    }
+                } catch (fileError) {
+                    console.log('本地文件加载失败:', fileError);
+                }
+            }
+
+            // 3. 使用本地存储
+            if (!dataLoaded) {
+                allData = getLocalData();
+                if (allData.length > 0) {
+                    dataLoaded = true;
+                    source = '💾 浏览器缓存数据';
+                    showMessage(`📱 从本地缓存加载 ${allData.length} 条数据`, 'success');
+                }
+            }
+
+            // 4. 如果都没有数据
+            if (!dataLoaded) {
+                allData = [];
+                source = '❌ 无数据';
+                showMessage('⚠️ 暂无数据，请先让学生填写问卷', 'info');
+            }
+
+            document.getElementById('dataSource').textContent = source + ` (${allData.length} 条记录)`;
+            updateDisplay();
+        }
+
+        // 从本地存储获取数据
+        function getLocalData() {
+            try {
+                const stored = localStorage.getItem('mindfulSurveyData');
+                return stored ? JSON.parse(stored) : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        // 保存到本地存储
+        function saveToLocalStorage(data) {
+            try {
+                localStorage.setItem('mindfulSurveyData', JSON.stringify(data));
+            } catch (error) {
+                console.error('保存到本地存储失败:', error);
+            }
+        }
+
+        // 更新显示
+        function updateDisplay() {
+            updateStats();
+            updateTable();
+        }
+
+        // 更新统计数据
+        function updateStats() {
+            const totalCount = allData.length;
+            const eligibleCount = allData.filter(item => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                return stateTotal >= 10 && traitTotal >= 14;
+            }).length;
+            const notEligibleCount = totalCount - eligibleCount;
+
+            document.getElementById('totalCount').textContent = totalCount;
+            document.getElementById('eligibleCount').textContent = eligibleCount;
+            document.getElementById('notEligibleCount').textContent = notEligibleCount;
+        }
+
+        // 更新表格
+        function updateTable() {
+            const tbody = document.getElementById('dataTableBody');
+            const emptyMessage = document.getElementById('emptyMessage');
+            
+            tbody.innerHTML = '';
+            
+            if (allData.length === 0) {
+                emptyMessage.style.display = 'block';
+                return;
+            } else {
+                emptyMessage.style.display = 'none';
+            }
+
+            allData.forEach((item, index) => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const total = stateTotal + traitTotal;
+                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+
+                const row = document.createElement('tr');
+                row.className = isEligible ? 'eligible' : 'not-eligible';
+                
+                row.innerHTML = `
+                    <td><strong>${index + 1}</strong></td>
+                    <td><strong>${item.name || '未知'}</strong></td>
+                    <td>${item.phone || '未填写'}</td>
+                    <td>${stateTotal}</td>
+                    <td>${traitTotal}</td>
+                    <td><strong>${total}</strong></td>
+                    <td>${isEligible ? '✅ 符合条件' : '⏳ 待观察'}</td>
+                    <td>${item.timestamp ? new Date(item.timestamp).toLocaleString() : '未知'}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // 导出数据
+        function exportData() {
+            if (allData.length === 0) {
+                showMessage('❌ 暂无数据可导出', 'error');
+                return;
+            }
+
+            let csv = '序号,姓名,电话,状态焦虑分,特质焦虑分,总分,评估结果,提交时间\n';
+            
+            allData.forEach((item, index) => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const total = stateTotal + traitTotal;
+                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+                
+                csv += `${index + 1},"${item.name || ''}","${item.phone || ''}",${stateTotal},${traitTotal},${total},"${isEligible ? '符合条件' : '待观察'}","${item.timestamp || ''}"\n`;
+            });
+
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `正念训练营数据_${new Date().toLocaleDateString()}.csv`;
+            link.click();
+
+            showMessage('✅ 数据导出成功！', 'success');
+        }
+
+        // 清除本地数据
+        function clearLocalData() {
+            if (confirm('确定要清除本地缓存数据吗？这不会影响服务器数据。')) {
+                localStorage.removeItem('mindfulSurveyData');
+                showMessage('✅ 本地缓存已清除', 'success');
+                setTimeout(loadData, 1000);
+            }
+        }
+
+        // 显示消息
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        // 监听主页面数据更新事件
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'mindfulSurveyData') {
+                console.log('检测到数据更新，刷新显示');
+                loadData();
+            }
+        });
+    </script>
+</body>
+</html>
