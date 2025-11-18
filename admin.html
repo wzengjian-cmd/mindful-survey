@@ -175,27 +175,43 @@
             loadData();
         });
 
-        // 从本地存储或API加载数据
+        // 从API或本地存储加载数据
         async function loadData() {
             showMessage('正在加载数据...', 'info');
             
             try {
-                // 尝试从API获取数据
-                const response = await fetch('/api/data');
+                // 首先尝试从新API获取数据
+                console.log('尝试从API获取数据...');
+                const response = await fetch('/api/store-data', { method: 'GET' });
+                
                 if (response.ok) {
                     const data = await response.json();
-                    allData = data.data || [];
+                    console.log('API数据:', data);
+                    
+                    if (data.success && data.data) {
+                        allData = data.data;
+                        showMessage(`✅ 从服务器加载了 ${allData.length} 条记录`, 'success');
+                    } else {
+                        // API返回了数据但格式不对，尝试本地存储
+                        allData = getLocalData();
+                        showMessage('⚠️ 服务器数据异常，使用本地数据', 'info');
+                    }
                 } else {
-                    // 如果API失败，从本地存储获取
-                    allData = getLocalData();
+                    throw new Error(`HTTP ${response.status}`);
                 }
+                
             } catch (error) {
-                console.log('API获取失败，使用本地存储数据');
+                console.log('API获取失败，使用本地存储数据:', error);
                 allData = getLocalData();
+                
+                if (allData.length > 0) {
+                    showMessage(`⚠️ 使用本地缓存数据，共 ${allData.length} 条记录`, 'info');
+                } else {
+                    showMessage('📝 暂无数据，请先在报名页面填写测试数据', 'info');
+                }
             }
 
             updateDisplay();
-            showMessage(`数据加载完成，共 ${allData.length} 条记录`, 'success');
         }
 
         // 从本地存储获取数据

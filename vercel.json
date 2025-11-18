@@ -2,18 +2,42 @@
   "version": 2,
   "builds": [
     {
+      "src": "api/store-data.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/get-data.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "api/submit.js",
       "use": "@vercel/node"
     },
     {
-      "src": "index.html",
+      "src": "api/data.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
+      "src": "/api/store-data",
+      "dest": "/api/store-data.js"
+    },
+    {
+      "src": "/api/get-data",
+      "dest": "/api/get-data.js"
+    },
+    {
       "src": "/submit",
       "dest": "/api/submit.js"
+    },
+    {
+      "src": "/api/data",
+      "dest": "/api/data.js"
     },
     {
       "src": "/api/(.*)",
