@@ -641,7 +641,7 @@
                     
                     if (response.ok && result.success) {
                         serverSuccess = true;
-                        serverMessage = `✅ 数据已成功保存到服务器！当前已收集 ${result.count} 份数据`;
+                        serverMessage = '✅ 数据提交成功，我们会尽快与您联系。';
                     } else {
                         throw new Error(result.error || 'API返回错误');
                     }
@@ -716,36 +716,48 @@
                 resultHtml += `<div class="${message.includes('成功') ? 'success' : 'error'}" style="margin-bottom: 20px;">${message}</div>`;
             }
             
+            // 先显示提交成功信息
+            const submitSuccessMsg = message && message.includes('成功') ? 
+                `<div class="success" style="margin-bottom: 20px;">✅ 数据提交成功，我们会尽快与您联系。</div>` : '';
+
             if (isEligible) {
-                resultHtml += `
+                resultHtml = `
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <h3 style="color: #3498db; margin-bottom: 15px; font-size: 20px;">符合训练营条件</h3>
+                        <p style="margin-bottom: 20px; font-size: 16px;">您符合我们的训练营条件，请联系项目负责人加入训练营。</p>
+                        <p style="margin-bottom: 25px; font-size: 16px; color: #666;">可以通过手机号或者二维码加入。</p>
+                    </div>
+                    ${submitSuccessMsg}
+                    
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <h3 style="color: #27ae60; margin-bottom: 10px;">🎉 恭喜您！</h3>
-                        <p>您符合我们的训练营条件，请通过以下方式立即报名：</p>
+                        <p><strong>状态焦虑总分：</strong> ${stateTotal} 分</p>
+                        <p><strong>特质焦虑总分：</strong> ${traitTotal} 分</p>
                     </div>
                 `;
+                
                 contactInfo.innerHTML = `
                     <div class="contact-grid">
                         <!-- 微信二维码区域 -->
                         <div class="qr-section">
-                            <h4 style="color: #2c3e50; margin-bottom: 15px;">💬 微信扫码报名</h4>
+                            <h4 style="color: #2c3e50; margin-bottom: 15px;">💬 微信扫码加入</h4>
                             <div class="qr-container">
                                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://weixin.qq.com/r/your-qr-code-url" 
                                      alt="微信二维码" 
                                      style="width: 150px; height: 150px; border: 2px solid #3498db; border-radius: 8px; margin-bottom: 10px; cursor: pointer;"
                                      onclick="showQRCodeLarge()"
                                      onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjRjhGOUZBIi8+Cjx0ZXh0IHg9Ijc1IiB5PSI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzMzMyI+5L2g5aW9PC90ZXh0Pgo8L3N2Zz4K';">
-                                <div style="font-size: 14px; color: #666;">扫码快速报名</div>
+                                <div style="font-size: 14px; color: #666;">扫码添加项目负责人</div>
                             </div>
                         </div>
                         
                         <!-- 电话联系区域 -->
                         <div class="phone-section">
-                            <h4 style="color: #2c3e50; margin-bottom: 15px;">📞 电话咨询</h4>
+                            <h4 style="color: #2c3e50; margin-bottom: 15px;">📞 电话联系</h4>
                             <a href="tel:13925337675" style="text-decoration: none; color: inherit;">
-                                <div class="phone-card" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                                <div class="phone-card" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; padding: 20px; border-radius: 10px; text-align: center;">
                                     <div style="font-size: 32px; margin-bottom: 10px;">📱</div>
                                     <div style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">13925337675</div>
-                                    <div style="font-size: 14px; opacity: 0.9;">点击立即拨打</div>
+                                    <div style="font-size: 14px; opacity: 0.9;">拨打项目负责人电话</div>
                                 </div>
                             </a>
                         </div>
@@ -760,24 +772,32 @@
                         </button>
                     </div>
                     
-                    <div style="margin-top: 20px; padding: 15px; background-color: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
-                        <p style="margin: 0; color: #856404; font-size: 14px;">
-                            <strong>🔥 名额有限提醒：</strong>建议立即扫码添加微信或拨打电话，锁定您的训练营名额。
+                    <div style="margin-top: 20px; padding: 15px; background-color: #e8f4fd; border-radius: 8px; border-left: 4px solid #3498db;">
+                        <p style="margin: 0; color: #0c5460; font-size: 14px;">
+                            <strong>📞 温馨提示：</strong>建议尽快联系我们，我们会根据您的情况安排最适合的训练方案。
                         </p>
                     </div>
                 `;
             } else {
-                resultHtml += `
+                resultHtml = `
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <h3 style="color: #f39c12; margin-bottom: 15px; font-size: 20px;">感谢您的参与</h3>
+                        <p style="margin-bottom: 15px; font-size: 16px;">感谢您此次的参与，因为人数有限，关注我们第二期的训练营招募。</p>
+                        <p style="margin-bottom: 20px; font-size: 16px; color: #666;">请保持电话畅通，我们会在后续的训练营中优先联系您。</p>
+                    </div>
+                    ${submitSuccessMsg}
+                    
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <h3 style="color: #f39c12; margin-bottom: 10px;">⏳ 感谢您的参与！</h3>
-                        <p>我们已收到您的报名信息，请保持电话畅通，我们会尽快联系您。</p>
+                        <p><strong>状态焦虑总分：</strong> ${stateTotal} 分</p>
+                        <p><strong>特质焦虑总分：</strong> ${traitTotal} 分</p>
                     </div>
                 `;
+                
                 contactInfo.innerHTML = `
                     <div style="text-align: center; padding: 20px; background-color: #e8f4fd; border-radius: 10px;">
-                        <h4 style="color: #2c3e50; margin-bottom: 15px;">📞 有任何疑问？</h4>
+                        <h4 style="color: #2c3e50; margin-bottom: 15px;">📞 如有任何疑问</h4>
                         <a href="tel:13925337675" class="btn" style="background-color: #3498db;">
-                            📞 联系我们
+                            📞 联系项目负责人
                         </a>
                         <p style="margin-top: 15px; color: #666; font-size: 14px;">
                             工作时间：周一至周五 9:00-18:00
@@ -843,19 +863,19 @@
         // 显示联系方式说明
         function showContactGuide() {
             const guideMessage = `
-📞 联系方式说明：
+📞 联系项目负责人方式：
 
-【微信报名】
-1. 扫描二维码添加微信
-2. 发送"正念训练营"
-3. 我们会通过好友请求
+【微信联系】
+1. 扫描二维码添加项目负责人微信
+2. 发送"正念训练营咨询"
+3. 我们会安排专业老师与您沟通
 
-【电话报名】
-1. 直接拨打 13925337675
-2. 说明是正念训练营报名
+【电话联系】
+1. 拨打项目负责人电话：13925337675
+2. 说明是正念训练营相关咨询
 3. 工作时间：周一至周五 9:00-18:00
 
-⏰ 名额有限，建议立即联系！
+📝 建议先微信联系，方便发送详细资料和安排时间。
             `;
             alert(guideMessage);
         }
