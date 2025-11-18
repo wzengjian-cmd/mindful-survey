@@ -44,8 +44,20 @@
       "dest": "/api/$1.js"
     },
     {
+      "src": "/all-data-view.html",
+      "dest": "/all-data-view.html"
+    },
+    {
       "src": "/admin.html",
       "dest": "/admin.html"
+    },
+    {
+      "src": "/admin-fixed.html",
+      "dest": "/admin-fixed.html"
+    },
+    {
+      "src": "/view-data.html",
+      "dest": "/view-data.html"
     },
     {
       "src": "/(.*)",

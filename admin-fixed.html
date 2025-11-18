@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据管理后台</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            min-width: 180px;
+            flex: 1;
+        }
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .export-btn {
+            background-color: #27ae60;
+        }
+        .export-btn:hover {
+            background-color: #229954;
+        }
+        .refresh-btn {
+            background-color: #f39c12;
+        }
+        .refresh-btn:hover {
+            background-color: #e67e22;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        .data-table th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
+        .data-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .eligible {
+            background-color: #d4edda !important;
+            color: #155724;
+        }
+        .not-eligible {
+            background-color: #fff3cd !important;
+            color: #856404;
+        }
+        .message {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 正念训练营数据管理后台</h1>
+            <p>实时查看学生报名数据和评估结果</p>
+        </div>
+
+        <div id="message" class="message" style="display: none;"></div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">总报名人数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="eligibleCount">0</div>
+                <div class="stat-label">符合条件人数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="notEligibleCount">0</div>
+                <div class="stat-label">待观察人数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgStateScore">0</div>
+                <div class="stat-label">平均状态焦虑分</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgTraitScore">0</div>
+                <div class="stat-label">平均特质焦虑分</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn refresh-btn" onclick="loadData()">🔄 刷新数据</button>
+            <button class="btn export-btn" onclick="exportData()">📥 导出数据</button>
+            <button class="btn" onclick="window.open('/', '_blank')">📋 查看报名表</button>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>电话</th>
+                        <th>状态焦虑分</th>
+                        <th>特质焦虑分</th>
+                        <th>总分</th>
+                        <th>评估结果</th>
+                        <th>提交时间</th>
+                        <th>联系方式</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTableBody">
+                    <!-- 数据将在这里动态加载 -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="emptyMessage" class="empty-message" style="display: none;">
+            <h3>📋 暂无数据</h3>
+            <p>请先在主页面填写问卷测试</p>
+            <a href="/" class="btn">📋 去填写数据</a>
+        </div>
+    </div>
+
+    <script>
+        let allData = [];
+
+        // 页面加载时获取数据
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+        });
+
+        // 从API或本地存储加载数据
+        async function loadData() {
+            showMessage('正在加载数据...', 'info');
+            
+            try {
+                // 尝试从API获取数据
+                const response = await fetch('/api/store-data', { method: 'GET' });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data.success && data.data) {
+                        allData = data.data;
+                        showMessage(`✅ 从服务器加载了 ${allData.length} 条记录`, 'success');
+                    } else {
+                        allData = [];
+                        showMessage('⚠️ 服务器暂无数据', 'info');
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+            } catch (error) {
+                console.log('API获取失败，使用本地存储:', error);
+                allData = getLocalData();
+                
+                if (allData.length > 0) {
+                    showMessage(`📱 从本地缓存加载 ${allData.length} 条数据`, 'success');
+                } else {
+                    showMessage('📝 暂无数据，请先填写测试数据', 'info');
+                }
+            }
+
+            updateDisplay();
+        }
+
+        // 从本地存储获取数据
+        function getLocalData() {
+            try {
+                const stored = localStorage.getItem('mindfulSurveyData');
+                return stored ? JSON.parse(stored) : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        // 更新显示
+        function updateDisplay() {
+            updateStats();
+            updateTable();
+        }
+
+        // 更新统计数据
+        function updateStats() {
+            const totalCount = allData.length;
+            const eligibleCount = allData.filter(item => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                return stateTotal >= 10 && traitTotal >= 14;
+            }).length;
+            const notEligibleCount = totalCount - eligibleCount;
+            
+            const allStateScores = allData.map(item => (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0));
+            const allTraitScores = allData.map(item => (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0));
+            const avgStateScore = allStateScores.length > 0 ? (allStateScores.reduce((a, b) => a + b, 0) / allStateScores.length).toFixed(1) : 0;
+            const avgTraitScore = allTraitScores.length > 0 ? (allTraitScores.reduce((a, b) => a + b, 0) / allTraitScores.length).toFixed(1) : 0;
+
+            document.getElementById('totalCount').textContent = totalCount;
+            document.getElementById('eligibleCount').textContent = eligibleCount;
+            document.getElementById('notEligibleCount').textContent = notEligibleCount;
+            document.getElementById('avgStateScore').textContent = avgStateScore;
+            document.getElementById('avgTraitScore').textContent = avgTraitScore;
+        }
+
+        // 更新表格
+        function updateTable() {
+            const tbody = document.getElementById('dataTableBody');
+            const emptyMessage = document.getElementById('emptyMessage');
+            
+            tbody.innerHTML = '';
+            
+            if (allData.length === 0) {
+                emptyMessage.style.display = 'block';
+                return;
+            } else {
+                emptyMessage.style.display = 'none';
+            }
+
+            allData.forEach((item, index) => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const total = stateTotal + traitTotal;
+                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+
+                const row = document.createElement('tr');
+                row.className = isEligible ? 'eligible' : 'not-eligible';
+                
+                row.innerHTML = `
+                    <td><strong>${index + 1}</strong></td>
+                    <td><strong>${item.name || '未知'}</strong></td>
+                    <td>${item.phone || '未填写'}</td>
+                    <td>${stateTotal}</td>
+                    <td>${traitTotal}</td>
+                    <td><strong>${total}</strong></td>
+                    <td>${isEligible ? '✅ 符合条件' : '⏳ 待观察'}</td>
+                    <td>${item.timestamp ? new Date(item.timestamp).toLocaleString() : '未知'}</td>
+                    <td><button class="btn" onclick="contactStudent('${item.phone || ''}')">📞 联系</button></td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // 导出数据
+        function exportData() {
+            if (allData.length === 0) {
+                showMessage('❌ 暂无数据可导出', 'error');
+                return;
+            }
+
+            let csv = '序号,姓名,电话,状态焦虑分,特质焦虑分,总分,评估结果,提交时间\n';
+            
+            allData.forEach((item, index) => {
+                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const total = stateTotal + traitTotal;
+                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+                
+                csv += `${index + 1},"${item.name || ''}","${item.phone || ''}",${stateTotal},${traitTotal},${total},"${isEligible ? '符合条件' : '待观察'}","${item.timestamp || ''}"\n`;
+            });
+
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `正念训练营数据_${new Date().toLocaleDateString()}.csv`;
+            link.click();
+
+            showMessage('✅ 数据导出成功！', 'success');
+        }
+
+        // 联系学生
+        function contactStudent(phone) {
+            if (phone) {
+                window.open(`tel:${phone}`, '_blank');
+            } else {
+                showMessage('该学生未填写电话号码', 'error');
+            }
+        }
+
+        // 显示消息
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
