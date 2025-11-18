@@ -1,32 +1,18 @@
-// 包含预填充数据的API文件
+// 使用Vercel KV或其他持久化存储的替代方案
+// 暂时使用内存存储 + 客户端同步的方式
 
-// 预填充数据（从您的本地文件复制）
-let submissions = [
-  {
-    "name": "wzj",
-    "phone": "13710077285",
-    "stateAnxietyScores": [3, 3, 3, 3, 3],
-    "traitAnxietyScores": [3, 3, 3, 3, 3],
-    "timestamp": "2025-11-18T15:23:49.731Z",
-    "ip": "::1"
-  },
-  {
-    "name": "wzj",
-    "phone": "13710077285",
-    "stateAnxietyScores": [3, 3, 3, 3, 3],
-    "traitAnxietyScores": [3, 3, 3, 3, 3],
-    "timestamp": "2025-11-18T15:27:16.699Z",
-    "ip": "::1"
-  },
-  {
-    "name": "wzj",
-    "phone": "13710077285",
-    "stateAnxietyScores": [3, 3, 3, 3, 3],
-    "traitAnxietyScores": [3, 3, 3, 3, 3],
-    "timestamp": "2025-11-18T15:53:53.923Z",
-    "ip": "::1"
-  }
-];
+// 模拟数据库
+let submissions = [];
+
+// 从localStorage或API获取现有数据
+async function loadExistingData() {
+    try {
+        // 这里可以连接真实数据库，暂时返回空数组
+        return [];
+    } catch (error) {
+        return [];
+    }
+}
 
 export default async function handler(req, res) {
     // 设置CORS头
@@ -40,7 +26,7 @@ export default async function handler(req, res) {
 
     try {
         if (req.method === 'POST') {
-            // 添加新数据
+            // 保存新数据
             const submissionData = {
                 ...req.body,
                 timestamp: new Date().toISOString(),
@@ -51,11 +37,11 @@ export default async function handler(req, res) {
 
             console.log('新数据已保存:', submissionData.name, '- 总数:', submissions.length);
 
-            // 返回成功响应
+            // 返回成功响应，包含所有数据（用于客户端同步）
             res.json({ 
                 success: true, 
                 message: '数据提交成功',
-                data: submissions, // 返回所有数据
+                data: submissions, // 返回所有数据供客户端存储
                 count: submissions.length
             });
 
