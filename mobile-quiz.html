@@ -18,31 +18,31 @@
         }
         body {
             margin: 0;
-            padding: 10px;
+            padding: 8px;
             background-color: #f5f7fa;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.5;
         }
         .container {
-            max-width: 480px;
+            max-width: 400px;
             margin: 0 auto;
             background-color: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
         }
         h1, h2 {
             text-align: center;
             color: #2c3e50;
         }
         h1 {
-            margin-bottom: 10px;
-            font-size: 24px;
+            margin-bottom: 8px;
+            font-size: 20px;
         }
         h2 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #3498db;
-            font-size: 20px;
+            font-size: 18px;
         }
         .page {
             display: none;
@@ -51,34 +51,28 @@
             display: block;
         }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: bold;
             color: #2c3e50;
             font-size: 14px;
         }
         input[type="text"], input[type="tel"] {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-        input:focus {
-            border-color: #3498db;
-            outline: none;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+            border-radius: 4px;
+            font-size: 14px;
         }
         .btn {
-            padding: 12px 20px;
+            padding: 10px 15px;
             background-color: #3498db;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
             margin: 5px;
@@ -93,47 +87,50 @@
         }
         .btn-container {
             text-align: center;
-            margin-top: 25px;
+            margin-top: 20px;
         }
         .instructions {
             background-color: #e8f4fd;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
             border-left: 4px solid #3498db;
-            font-size: 14px;
+            font-size: 13px;
         }
         .scale-item {
-            margin-bottom: 20px;
-            padding: 12px;
+            margin-bottom: 15px;
+            padding: 8px;
             background-color: #f9f9f9;
-            border-radius: 5px;
+            border-radius: 4px;
         }
         .scale-question {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
         }
         .scale-options {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
         }
         .scale-option {
-            text-align: center;
-            width: 23%;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             font-size: 12px;
-            padding: 5px;
-            margin-bottom: 5px;
+            cursor: pointer;
         }
         .scale-option input {
             margin-right: 5px;
         }
         .progress-bar {
-            height: 6px;
+            height: 4px;
             background-color: #e0e0e0;
-            border-radius: 3px;
-            margin-bottom: 15px;
+            border-radius: 2px;
+            margin-bottom: 10px;
             overflow: hidden;
         }
         .progress {
@@ -148,13 +145,13 @@
         }
         .contact-info {
             background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
-            padding: 20px;
-            border-radius: 10px;
+            padding: 15px;
+            border-radius: 8px;
             margin: 15px 0;
             text-align: center;
         }
         .phone-number {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             color: #2c3e50;
         }
@@ -169,11 +166,11 @@
             margin: 10px 0;
         }
         .loading-spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             animation: spin 2s linear infinite;
             margin: 0 auto;
         }
@@ -181,61 +178,36 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .error {
-            color: #e74c3c;
-            background-color: #fdf2f2;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #e74c3c;
-            margin: 10px 0;
-        }
         .success {
             color: #27ae60;
             background-color: #f0fdf4;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 8px;
+            border-radius: 4px;
             border-left: 4px solid #27ae60;
             margin: 10px 0;
+            font-size: 13px;
         }
 
-        /* 管理员按钮样式 */
+        /* 管理员按钮 */
         .admin-btn {
             position: fixed;
-            top: 10px;
-            right: 10px;
+            top: 5px;
+            right: 5px;
             background: #e74c3c;
             color: white;
             border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
+            padding: 5px 8px;
+            border-radius: 3px;
             cursor: pointer;
             z-index: 1000;
-            font-size: 12px;
+            font-size: 11px;
             display: none;
-        }
-
-        /* 响应式优化 */
-        @media (max-width: 480px) {
-            .scale-option {
-                width: 48%;
-                font-size: 11px;
-            }
-            .btn {
-                padding: 10px 16px;
-                font-size: 13px;
-            }
-            h1 {
-                font-size: 20px;
-            }
-            h2 {
-                font-size: 18px;
-            }
         }
     </style>
 </head>
 <body>
     <!-- 管理员按钮 - 默认隐藏 -->
-    <button class="admin-btn" onclick="showAdminPanel()" id="adminBtn">📊 数据管理</button>
+    <button class="admin-btn" onclick="showAdminPanel()" id="adminBtn">📊</button>
 
     <div class="container">
         <!-- 进度条 -->
@@ -247,13 +219,12 @@
         <div id="page1" class="page active">
             <h1>8天正念呼吸训练营</h1>
             <div class="instructions">
-                <p>您好！</p>
-                <p>本研究是一项为期8天的正念呼吸训练营。该训练旨在帮助参与者学习通过简单的呼吸练习来调节情绪、缓解压力。</p>
+                <p>您好！本研究是一项为期8天的正念呼吸训练营。</p>
                 <p>在开始之前，请您知悉：</p>
-                <ul>
-                    <li><strong>研究目的：</strong>本次调查是为了找到最能从本训练中受益的参与者，以确保训练效果。</li>
-                    <li><strong>数据使用：</strong>您提供的所有信息将严格保密，并仅用于本次训练与研究分析。</li>
-                    <li><strong>自愿参与：</strong>您的参与是完全自愿的。您可以根据自己的意愿决定是否参加。</li>
+                <ul style="margin: 10px 0; padding-left: 15px;">
+                    <li>研究目的：找到最能从本训练中受益的参与者</li>
+                    <li>数据使用：信息将严格保密，仅用于本次训练</li>
+                    <li>自愿参与：您的参与是完全自愿的</li>
                 </ul>
             </div>
             <div class="btn-container">
@@ -265,9 +236,6 @@
         <!-- 第2页：基本信息 -->
         <div id="page2" class="page">
             <h2>基本信息登记</h2>
-            <div class="instructions">
-                <p>感谢您的参与！为了更好地安排训练事宜，请在下方填写您的基本信息。</p>
-            </div>
             <div class="form-group">
                 <label for="name" class="required">姓名</label>
                 <input type="text" id="name" placeholder="请输入您的姓名">
@@ -292,50 +260,50 @@
             <div class="scale-item">
                 <div class="scale-question">A1 我感到烦恼</div>
                 <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="a1" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="a1" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="a1" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="a1" value="4"> 4<br>非常明显</div>
+                    <label class="scale-option"><input type="radio" name="a1" value="1"> 1<br>完全没有</label>
+                    <label class="scale-option"><input type="radio" name="a1" value="2"> 2<br>有些</label>
+                    <label class="scale-option"><input type="radio" name="a1" value="3"> 3<br>中等程度</label>
+                    <label class="scale-option"><input type="radio" name="a1" value="4"> 4<br>非常明显</label>
                 </div>
             </div>
             
             <div class="scale-item">
                 <div class="scale-question">A2 我感到害怕</div>
                 <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="a2" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="a2" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="a2" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="a2" value="4"> 4<br>非常明显</div>
+                    <label class="scale-option"><input type="radio" name="a2" value="1"> 1<br>完全没有</label>
+                    <label class="scale-option"><input type="radio" name="a2" value="2"> 2<br>有些</label>
+                    <label class="scale-option"><input type="radio" name="a2" value="3"> 3<br>中等程度</label>
+                    <label class="scale-option"><input type="radio" name="a2" value="4"> 4<br>非常明显</label>
                 </div>
             </div>
             
             <div class="scale-item">
                 <div class="scale-question">A3 我感到慌乱</div>
                 <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="a3" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="a3" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="a3" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="a3" value="4"> 4<br>非常明显</div>
+                    <label class="scale-option"><input type="radio" name="a3" value="1"> 1<br>完全没有</label>
+                    <label class="scale-option"><input type="radio" name="a3" value="2"> 2<br>有些</label>
+                    <label class="scale-option"><input type="radio" name="a3" value="3"> 3<br>中等程度</label>
+                    <label class="scale-option"><input type="radio" name="a3" value="4"> 4<br>非常明显</label>
                 </div>
             </div>
             
             <div class="scale-item">
                 <div class="scale-question">A4 我极度紧张不安</div>
                 <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="a4" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="a4" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="a4" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="a4" value="4"> 4<br>非常明显</div>
+                    <label class="scale-option"><input type="radio" name="a4" value="1"> 1<br>完全没有</label>
+                    <label class="scale-option"><input type="radio" name="a4" value="2"> 2<br>有些</label>
+                    <label class="scale-option"><input type="radio" name="a4" value="3"> 3<br>中等程度</label>
+                    <label class="scale-option"><input type="radio" name="a4" value="4"> 4<br>非常明显</label>
                 </div>
             </div>
             
             <div class="scale-item">
                 <div class="scale-question">A5 我感到困惑</div>
                 <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="a5" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="a5" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="a5" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="a5" value="4"> 4<br>非常明显</div>
+                    <label class="scale-option"><input type="radio" name="a5" value="1"> 1<br>完全没有</label>
+                    <label class="scale-option"><input type="radio" name="a5" value="2"> 2<br>有些</label>
+                    <label class="scale-option"><input type="radio" name="a5" value="3"> 3<br>中等程度</label>
+                    <label class="scale-option"><input type="radio" name="a5" value="4"> 4<br>非常明显</label>
                 </div>
             </div>
             
@@ -355,50 +323,50 @@
             <div class="scale-item">
                 <div class="scale-question">B1 我感到困难一一堆集起来，因此无法克服</div>
                 <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="b1" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="b1" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="b1" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="b1" value="4"> 4<br>非常明显</div>
+                    <label class="scale-option"><input type="radio" name="b1" value="1"> 1<br>完全没有</label>
+                    <label class="scale-option"><input type="radio" name="b1" value="2"> 2<br>有些</label>
+                    <label class="scale-option"><input type="radio" name="b1" value="3"> 3<br>中等程度</label>
+                    <label class="scale-option"><input type="radio" name="b1" value="4"> 4<br>非常明显</label>
                 </div>
             </div>
             
             <div class="scale-item">
                 <div class="scale-question">B2 我过分忧虑一些事，实际上这些事无关紧要</div>
                 <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="b2" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="b2" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="b2" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="b2" value="4"> 4<br>非常明显</div>
+                    <label class="scale-option"><input type="radio" name="b2" value="1"> 1<br>完全没有</label>
+                    <label class="scale-option"><input type="radio" name="b2" value="2"> 2<br>有些</label>
+                    <label class="scale-option"><input type="radio" name="b2" value="3"> 3<br>中等程度</label>
+                    <label class="scale-option"><input type="radio" name="b2" value="4"> 4<br>非常明显</label>
                 </div>
             </div>
             
             <div class="scale-item">
                 <div class="scale-question">B3 一些不重要的思想总是缠绕着我，并打扰我</div>
                 <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="b3" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="b3" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="b3" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="b3" value="4"> 4<br>非常明显</div>
+                    <label class="scale-option"><input type="radio" name="b3" value="1"> 1<br>完全没有</label>
+                    <label class="scale-option"><input type="radio" name="b3" value="2"> 2<br>有些</label>
+                    <label class="scale-option"><input type="radio" name="b3" value="3"> 3<br>中等程度</label>
+                    <label class="scale-option"><input type="radio" name="b3" value="4"> 4<br>非常明显</label>
                 </div>
             </div>
             
             <div class="scale-item">
                 <div class="scale-question">B4 我产生的沮丧是如此强烈，以致我不能从思想中排除它们</div>
                 <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="b4" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="b4" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="b4" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="b4" value="4"> 4<br>非常明显</div>
+                    <label class="scale-option"><input type="radio" name="b4" value="1"> 1<br>完全没有</label>
+                    <label class="scale-option"><input type="radio" name="b4" value="2"> 2<br>有些</label>
+                    <label class="scale-option"><input type="radio" name="b4" value="3"> 3<br>中等程度</label>
+                    <label class="scale-option"><input type="radio" name="b4" value="4"> 4<br>非常明显</label>
                 </div>
             </div>
             
             <div class="scale-item">
                 <div class="scale-question">B5 当我考虑我目前的事情和利益时，我就陷入紧张状态</div>
                 <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="b5" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="b5" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="b5" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="b5" value="4"> 4<br>非常明显</div>
+                    <label class="scale-option"><input type="radio" name="b5" value="1"> 1<br>完全没有</label>
+                    <label class="scale-option"><input type="radio" name="b5" value="2"> 2<br>有些</label>
+                    <label class="scale-option"><input type="radio" name="b5" value="3"> 3<br>中等程度</label>
+                    <label class="scale-option"><input type="radio" name="b5" value="4"> 4<br>非常明显</label>
                 </div>
             </div>
             
@@ -406,8 +374,6 @@
                 <div class="loading-spinner"></div>
                 <p>正在提交数据，请稍候...</p>
             </div>
-            
-            <div id="submitError" class="error" style="display: none;"></div>
             
             <div class="btn-container">
                 <button class="btn" onclick="showPage(3)">上一步</button>
@@ -423,51 +389,43 @@
             <div class="btn-container">
                 <button class="btn" onclick="restartSurvey()">重新开始</button>
             </div>
-            
-
         </div>
     </div>
 
-    <!-- 管理员数据面板 -->
-    <div id="adminPanel" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; padding: 20px; overflow-y: auto;">
-        <div style="background: white; margin: 50px auto; max-width: 1000px; padding: 30px; border-radius: 10px; max-height: 80vh; overflow-y: auto;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2>📊 数据管理后台</h2>
-                <button onclick="hideAdminPanel()" class="btn" style="background: #e74c3c;">❌ 关闭</button>
+    <!-- 简化的管理面板 -->
+    <div id="adminPanel" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; padding: 10px; overflow-y: auto;">
+        <div style="background: white; margin: 20px auto; max-width: 600px; padding: 20px; border-radius: 8px; max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3>📊 数据管理</h3>
+                <button onclick="hideAdminPanel()" class="btn" style="background: #e74c3c; padding: 5px 10px; font-size: 12px;">❌</button>
             </div>
 
-            <div style="display: flex; justify-content: space-around; margin-bottom: 20px; flex-wrap: wrap;">
-                <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; min-width: 120px; margin: 5px;">
-                    <div style="font-size: 2em; font-weight: bold;" id="totalDataCount">0</div>
-                    <div style="font-size: 0.9em; opacity: 0.9;">总人数</div>
+            <div style="display: flex; justify-content: space-around; margin-bottom: 15px;">
+                <div style="text-align: center; padding: 10px; background: #3498db; color: white; border-radius: 5px; min-width: 80px;">
+                    <div style="font-size: 1.5em; font-weight: bold;" id="totalDataCount">0</div>
+                    <div style="font-size: 0.8em;">总人数</div>
                 </div>
-                <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white; border-radius: 10px; min-width: 120px; margin: 5px;">
-                    <div style="font-size: 2em; font-weight: bold;" id="eligibleDataCount">0</div>
-                    <div style="font-size: 0.9em; opacity: 0.9;">符合条件</div>
-                </div>
-                <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; border-radius: 10px; min-width: 120px; margin: 5px;">
-                    <div style="font-size: 2em; font-weight: bold;" id="notEligibleDataCount">0</div>
-                    <div style="font-size: 0.9em; opacity: 0.9;">待观察</div>
+                <div style="text-align: center; padding: 10px; background: #27ae60; color: white; border-radius: 5px; min-width: 80px;">
+                    <div style="font-size: 1.5em; font-weight: bold;" id="eligibleDataCount">0</div>
+                    <div style="font-size: 0.8em;">符合条件</div>
                 </div>
             </div>
 
-            <div style="text-align: center; margin-bottom: 20px;">
-                <button onclick="loadDataInPanel()" class="btn" style="background: #f39c12;">🔄 刷新数据</button>
-                <button onclick="exportDataInPanel()" class="btn" style="background: #27ae60;">📥 导出数据</button>
+            <div style="text-align: center; margin-bottom: 15px;">
+                <button onclick="loadDataInPanel()" class="btn" style="background: #f39c12; font-size: 12px;">🔄 刷新</button>
+                <button onclick="exportDataInPanel()" class="btn" style="background: #27ae60; font-size: 12px;">📥 导出</button>
             </div>
 
             <div style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                     <thead>
-                        <tr style="background-color: #3498db; color: white;">
-                            <th style="padding: 10px; border: 1px solid #ddd;">序号</th>
-                            <th style="padding: 10px; border: 1px solid #ddd;">姓名</th>
-                            <th style="padding: 10px; border: 1px solid #ddd;">电话</th>
-                            <th style="padding: 10px; border: 1px solid #ddd;">状态分</th>
-                            <th style="padding: 10px; border: 1px solid #ddd;">特质分</th>
-                            <th style="padding: 10px; border: 1px solid #ddd;">总分</th>
-                            <th style="padding: 10px; border: 1px solid #ddd;">结果</th>
-                            <th style="padding: 10px; border: 1px solid #ddd;">时间</th>
+                        <tr style="background: #3498db; color: white;">
+                            <th style="padding: 5px;">序号</th>
+                            <th style="padding: 5px;">姓名</th>
+                            <th style="padding: 5px;">电话</th>
+                            <th style="padding: 5px;">A1-A2分</th>
+                            <th style="padding: 5px;">B1-B2分</th>
+                            <th style="padding: 5px;">结果</th>
                         </tr>
                     </thead>
                     <tbody id="dataTableBodyInPanel">
@@ -479,7 +437,7 @@
     </div>
 
     <script>
-        // 全局变量存储用户数据
+        // 全局变量
         let userData = {
             name: '',
             phone: '',
@@ -487,35 +445,27 @@
             traitAnxietyScores: []
         };
         
-        // 页面显示控制
+        // 页面控制
         function showPage(pageNumber) {
-            // 隐藏所有页面
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            
-            // 显示目标页面
             document.getElementById(`page${pageNumber}`).classList.add('active');
-            
-            // 更新进度条
             updateProgressBar(pageNumber);
         }
         
-        // 更新进度条
         function updateProgressBar(currentPage) {
             const totalPages = 5;
             const progressPercentage = ((currentPage - 1) / (totalPages - 1)) * 100;
             document.getElementById('progress').style.width = `${progressPercentage}%`;
         }
         
-        // 退出研究
         function exitStudy() {
             if (confirm('您确定要退出研究吗？')) {
                 alert('感谢您的关注！');
             }
         }
         
-        // 验证基本信息
         function validateBasicInfo() {
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
@@ -530,21 +480,16 @@
                 return;
             }
             
-            // 简单的电话号码验证
             if (!/^1[3-9]\d{9}$/.test(phone)) {
                 alert('请输入有效的手机号码');
                 return;
             }
             
-            // 保存基本信息
             userData.name = name;
             userData.phone = phone;
-            
-            // 跳转到下一页
             showPage(3);
         }
         
-        // 验证状态焦虑量表
         function validateStateAnxiety() {
             const questions = ['a1', 'a2', 'a3', 'a4', 'a5'];
             let allAnswered = true;
@@ -565,11 +510,10 @@
                 return;
             }
             
-            // 跳转到下一页
             showPage(4);
         }
         
-        // 计算并显示结果
+        // 计算结果
         async function calculateResults() {
             const questions = ['b1', 'b2', 'b3', 'b4', 'b5'];
             let allAnswered = true;
@@ -595,23 +539,17 @@
             const traitTotal = userData.traitAnxietyScores.slice(0, 2).reduce((a, b) => a + b, 0);
             const isEligible = stateTotal > 9.5 && traitTotal > 13.5;
             
-            // 显示加载动画
             document.getElementById('loading').style.display = 'block';
             document.getElementById('submitBtn').disabled = true;
-            document.getElementById('submitError').style.display = 'none';
             
-            // 保存数据（优先服务器，失败则本地存储）
             await saveToLocalStorage(userData);
+            showResults(isEligible, stateTotal, traitTotal, '✅ 数据已保存');
             
-            // 显示结果
-            showResults(isEligible, stateTotal, traitTotal, '✅ 数据已保存，我们会尽快与您联系。');
-            
-            // 隐藏加载动画
             document.getElementById('loading').style.display = 'none';
             document.getElementById('submitBtn').disabled = false;
         }
         
-        // 保存到服务器和本地存储
+        // 保存数据
         async function saveToLocalStorage(data) {
             const submission = {
                 ...data,
@@ -619,7 +557,6 @@
                 ip: window.location.hostname
             };
 
-            // 优先保存到服务器
             try {
                 const response = await fetch(`${window.location.origin}/api/store-data`, {
                     method: 'POST',
@@ -635,32 +572,22 @@
                     throw new Error('服务器保存失败');
                 }
             } catch (error) {
-                console.error('保存到服务器失败，尝试本地存储:', error);
-                
-                // 如果服务器失败，保存到本地存储作为备份
-                try {
-                    const submissions = JSON.parse(localStorage.getItem('mindfulSurveyData') || '[]');
-                    submissions.push(submission);
-                    localStorage.setItem('mindfulSurveyData', JSON.stringify(submissions));
-                    console.log('数据已保存到本地存储');
-                } catch (localError) {
-                    console.error('本地存储也失败:', localError);
-                }
+                console.error('保存到服务器失败:', error);
             }
         }
         
-        // 显示结果页面
+        // 显示结果
         function showResults(isEligible, stateTotal, traitTotal, message) {
             const resultMessage = document.getElementById('resultMessage');
             const contactInfo = document.getElementById('contactInfo');
             
             if (isEligible) {
                 resultMessage.innerHTML = `
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <h3 style="color: #3498db; margin-bottom: 15px; font-size: 18px;">符合纳入训练营</h3>
-                        <p style="margin-bottom: 15px; font-size: 14px;">您符合我们的训练营条件，请联系项目负责人加入训练营。</p>
-                        <p>A1-A2总分：${stateTotal} 分</p>
-                        <p>B1-B2总分：${traitTotal} 分</p>
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <h3 style="color: #3498db; margin-bottom: 10px; font-size: 16px;">符合纳入训练营</h3>
+                        <p style="margin-bottom: 10px; font-size: 13px;">您符合我们的训练营条件，请联系项目负责人加入训练营。</p>
+                        <p style="margin-bottom: 5px; font-size: 13px;">A1-A2总分：${stateTotal} 分</p>
+                        <p style="margin-bottom: 5px; font-size: 13px;">B1-B2总分：${traitTotal} 分</p>
                     </div>
                     <div class="success">${message}</div>
                 `;
@@ -672,12 +599,12 @@
                 `;
             } else {
                 resultMessage.innerHTML = `
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <h3 style="color: #f39c12; margin-bottom: 15px; font-size: 18px;">感谢您的参与</h3>
-                        <p style="margin-bottom: 15px; font-size: 14px;">感谢您此次的参与，因为人数有限，关注我们第二期的训练营招募。</p>
-                        <p style="margin-bottom: 10px; font-size: 14px; color: #666;">请保持电话畅通，我们会在后续的训练营中优先联系您。</p>
-                        <p>A1-A2总分：${stateTotal} 分</p>
-                        <p>B1-B2总分：${traitTotal} 分</p>
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <h3 style="color: #f39c12; margin-bottom: 10px; font-size: 16px;">感谢您的参与</h3>
+                        <p style="margin-bottom: 10px; font-size: 13px;">感谢您此次的参与，关注我们第二期的训练营招募。</p>
+                        <p style="margin-bottom: 5px; font-size: 12px; color: #666;">请保持电话畅通。</p>
+                        <p style="margin-bottom: 5px; font-size: 13px;">A1-A2总分：${stateTotal} 分</p>
+                        <p style="margin-bottom: 5px; font-size: 13px;">B1-B2总分：${traitTotal} 分</p>
                     </div>
                     <div class="success">${message}</div>
                 `;
@@ -692,9 +619,7 @@
             showPage(5);
         }
         
-        // 重新开始调查
         function restartSurvey() {
-            // 重置表单和数据
             document.querySelectorAll('input').forEach(input => {
                 if (input.type === 'radio') {
                     input.checked = false;
@@ -703,9 +628,6 @@
                 }
             });
             
-            // 隐藏错误信息
-            document.getElementById('submitError').style.display = 'none';
-            
             userData = {
                 name: '',
                 phone: '',
@@ -713,35 +635,28 @@
                 traitAnxietyScores: []
             };
             
-            // 回到第一页
             showPage(1);
         }
 
-        // ========== 管理员功能 ==========
-        
-        // 检查管理员访问权限
+        // 管理功能
         function checkAdminAccess() {
             const urlParams = new URLSearchParams(window.location.search);
-            const isAdmin = urlParams.get('admin') === 'true' || 
-                          localStorage.getItem('adminAccess') === 'true';
+            const isAdmin = urlParams.get('admin') === 'true';
             
             if (isAdmin) {
                 document.getElementById('adminBtn').style.display = 'block';
             }
         }
 
-        // 显示管理面板
         function showAdminPanel() {
             document.getElementById('adminPanel').style.display = 'block';
             loadDataInPanel();
         }
 
-        // 隐藏管理面板
         function hideAdminPanel() {
             document.getElementById('adminPanel').style.display = 'none';
         }
 
-        // 在面板中加载数据
         function loadDataInPanel() {
             const storedData = localStorage.getItem('mindfulSurveyData');
             const data = storedData ? JSON.parse(storedData) : [];
@@ -749,55 +664,44 @@
             if (data.length === 0) {
                 document.getElementById('dataTableBodyInPanel').innerHTML = `
                     <tr>
-                        <td colspan="8" style="text-align: center; padding: 20px; color: #666;">暂无数据</td>
+                        <td colspan="6" style="text-align: center; padding: 20px; color: #666;">暂无数据</td>
                     </tr>
                 `;
-                updateDataCounts([]);
+                updateDataCounts({ total: 0, eligible: 0 });
                 return;
             }
 
             let tableHtml = '';
             let eligibleCount = 0;
-            let notEligibleCount = 0;
 
             data.forEach((item, index) => {
-                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
-                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
-                const total = stateTotal + traitTotal;
+                const stateTotal = (item.stateAnxietyScores || []).slice(0, 2).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).slice(0, 2).reduce((a, b) => a + b, 0);
                 const isEligible = stateTotal > 9.5 && traitTotal > 13.5;
 
-                if (isEligible) {
-                    eligibleCount++;
-                } else {
-                    notEligibleCount++;
-                }
+                if (isEligible) eligibleCount++;
 
                 tableHtml += `
                     <tr style="${isEligible ? 'background: #d4edda;' : 'background: #fff3cd;'}">
-                        <td style="padding: 10px; border: 1px solid #ddd;">${index + 1}</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">${item.name || '未知'}</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"><a href="tel:${item.phone}">${item.phone || '未填写'}</a></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">${stateTotal}</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">${traitTotal}</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>${total}</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">${isEligible ? '✅ 符合条件' : '⏳ 待观察'}</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">${item.timestamp ? new Date(item.timestamp).toLocaleString() : '未知'}</td>
+                        <td style="padding: 5px;">${index + 1}</td>
+                        <td style="padding: 5px;">${item.name || '未知'}</td>
+                        <td style="padding: 5px;"><a href="tel:${item.phone}">${item.phone || '未填写'}</a></td>
+                        <td style="padding: 5px;">${stateTotal}</td>
+                        <td style="padding: 5px;">${traitTotal}</td>
+                        <td style="padding: 5px;">${isEligible ? '✅ 符合' : '⏳ 观察'}</td>
                     </tr>
                 `;
             });
 
             document.getElementById('dataTableBodyInPanel').innerHTML = tableHtml;
-            updateDataCounts({ total: data.length, eligible: eligibleCount, notEligible: notEligibleCount });
+            updateDataCounts({ total: data.length, eligible: eligibleCount });
         }
 
-        // 更新数据统计
         function updateDataCounts(counts) {
             document.getElementById('totalDataCount').textContent = counts.total || 0;
             document.getElementById('eligibleDataCount').textContent = counts.eligible || 0;
-            document.getElementById('notEligibleDataCount').textContent = counts.notEligible || 0;
         }
 
-        // 导出数据
         function exportDataInPanel() {
             const storedData = localStorage.getItem('mindfulSurveyData');
             const data = storedData ? JSON.parse(storedData) : [];
@@ -807,15 +711,14 @@
                 return;
             }
 
-            let csv = '序号,姓名,电话,状态焦虑分,特质焦虑分,总分,评估结果,提交时间\n';
+            let csv = '序号,姓名,电话,A1-A2分,B1-B2分,评估结果,提交时间\n';
             
             data.forEach((item, index) => {
-                const stateTotal = (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
-                const traitTotal = (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
-                const total = stateTotal + traitTotal;
+                const stateTotal = (item.stateAnxietyScores || []).slice(0, 2).reduce((a, b) => a + b, 0);
+                const traitTotal = (item.traitAnxietyScores || []).slice(0, 2).reduce((a, b) => a + b, 0);
                 const isEligible = stateTotal > 9.5 && traitTotal > 13.5;
                 
-                csv += `${index + 1},"${item.name || ''}","${item.phone || ''}",${stateTotal},${traitTotal},${total},"${isEligible ? '符合条件' : '待观察'}","${item.timestamp || ''}"\n`;
+                csv += `${index + 1},"${item.name || ''}","${item.phone || ''}",${stateTotal},${traitTotal},"${isEligible ? '符合条件' : '待观察'}","${item.timestamp || ''}"\n`;
             });
 
             const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
@@ -825,43 +728,10 @@
             link.click();
         }
 
-        // 初始化页面
+        // 初始化
         document.addEventListener('DOMContentLoaded', function() {
             updateProgressBar(1);
             checkAdminAccess();
-            
-            // 添加测试数据到本地存储
-            const storedData = localStorage.getItem('mindfulSurveyData');
-            if (!storedData) {
-                const testData = [
-                    {
-                        name: "测试用户1",
-                        phone: "13800138000",
-                        stateAnxietyScores: [3, 3, 1, 1, 1], // A1-A2总分6 < 9.5
-                        traitAnxietyScores: [4, 4, 1, 1, 1], // B1-B2总分8 < 13.5
-                        timestamp: "2025-11-18T15:23:49.731Z",
-                        ip: "::1"
-                    },
-                    {
-                        name: "测试用户2",
-                        phone: "13900139000",
-                        stateAnxietyScores: [3, 4, 2, 2, 2], // A1-A2总分7 < 9.5
-                        traitAnxietyScores: [4, 4, 3, 3, 3], // B1-B2总分8 < 13.5
-                        timestamp: "2025-11-18T15:27:16.699Z",
-                        ip: "::1"
-                    },
-                    {
-                        name: "测试用户3",
-                        phone: "13700137000",
-                        stateAnxietyScores: [3, 4, 2, 2, 2], // A1-A2总分7 < 9.5
-                        traitAnxietyScores: [4, 4, 3, 3, 3], // B1-B2总分8 < 13.5
-                        timestamp: "2025-11-18T15:53:53.923Z",
-                        ip: "::1"
-                    }
-                ];
-                localStorage.setItem('mindfulSurveyData', JSON.stringify(testData));
-                console.log('已添加测试数据');
-            }
         });
     </script>
 </body>
