@@ -286,9 +286,8 @@
         <div id="page3" class="page">
             <h2>心理状态评估</h2>
             <div class="instructions">
-                <p>请根据您<strong>此时此刻</strong>的感受，评价下面的陈述。</p>
-                <p><strong>评分标准：</strong> 1-完全没有 2-有些 3-中等程度 4-非常明显</p>
-                <p><strong>入组标准：</strong> 状态焦虑总分 > 9.5分，特质焦虑总分 > 13.5分</p>
+                <p>请根据您<strong><strong>此时此刻</strong></strong>的感受，评价下面的陈述。</p>
+                <p>1-完全没有 2-有些 3-中等程度 4-非常明显</p>
             </div>
             
             <div class="scale-item">
@@ -352,8 +351,7 @@
             <h2>心理状态评估</h2>
             <div class="instructions">
                 <p>请根据您<strong>平时或一般情况下</strong>的感受，评价下面的陈述。</p>
-                <p><strong>评分标准：</strong> 1-完全没有 2-有些 3-中等程度 4-非常明显</p>
-                <p><strong>入组标准：</strong> 状态焦虑总分 > 9.5分，特质焦虑总分 > 13.5分</p>
+                <p>1-完全没有 2-有些 3-中等程度 4-非常明显</p>
             </div>
             
             <div class="scale-item">
@@ -428,13 +426,7 @@
                 <button class="btn" onclick="restartSurvey()">重新开始</button>
             </div>
             
-            <!-- 参考文献 -->
-            <div style="margin-top: 30px; padding: 15px; background: #f8f9fa; border-radius: 8px; font-size: 12px; color: #666;">
-                <h4 style="margin-bottom: 10px;">参考文献：</h4>
-                <p style="margin: 5px 0;">1. 精简版状态-特质焦虑量表在中国青年群体中的信效度检验，邱文珍</p>
-                <p style="margin: 5px 0;">2. Development of the short version of the spielberger state—trait anxiety inventory, Zsido et al.</p>
-                <p style="margin: 5px 0;"><strong>临界值：</strong>状态焦虑 > 9.5分，特质焦虑 > 13.5分</p>
-            </div>
+
         </div>
     </div>
 
@@ -600,9 +592,9 @@
                 return;
             }
             
-            // 计算总分
-            const stateTotal = userData.stateAnxietyScores.reduce((a, b) => a + b, 0);
-            const traitTotal = userData.traitAnxietyScores.reduce((a, b) => a + b, 0);
+            // 计算A1-A2和B1-B2总分
+            const stateTotal = userData.stateAnxietyScores.slice(0, 2).reduce((a, b) => a + b, 0);
+            const traitTotal = userData.traitAnxietyScores.slice(0, 2).reduce((a, b) => a + b, 0);
             const isEligible = stateTotal > 9.5 && traitTotal > 13.5;
             
             // 显示加载动画
@@ -610,55 +602,52 @@
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('submitError').style.display = 'none';
             
-            // 保存到本地存储
-            saveToLocalStorage(userData);
-            
-            // 尝试提交到服务器
-            let serverMessage = '✅ 数据已保存，我们会尽快与您联系。';
-            
-            try {
-                const API_BASE = window.location.origin;
-                
-                const response = await fetch(`${API_BASE}/api/store-data`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(userData)
-                });
-                
-                if (response.ok) {
-                    console.log('数据提交成功');
-                } else {
-                    console.log('服务器提交失败，但数据已本地保存');
-                }
-                
-            } catch (error) {
-                console.error('网络错误，但数据已本地保存:', error);
-            }
+            // 保存数据（优先服务器，失败则本地存储）
+            await saveToLocalStorage(userData);
             
             // 显示结果
-            showResults(isEligible, stateTotal, traitTotal, serverMessage);
+            showResults(isEligible, stateTotal, traitTotal, '✅ 数据已保存，我们会尽快与您联系。');
             
             // 隐藏加载动画
             document.getElementById('loading').style.display = 'none';
             document.getElementById('submitBtn').disabled = false;
         }
         
-        // 保存到本地存储
-        function saveToLocalStorage(data) {
+        // 保存到服务器和本地存储
+        async function saveToLocalStorage(data) {
+            const submission = {
+                ...data,
+                timestamp: new Date().toISOString(),
+                ip: window.location.hostname
+            };
+
+            // 优先保存到服务器
             try {
-                const submissions = JSON.parse(localStorage.getItem('mindfulSurveyData') || '[]');
-                const submission = {
-                    ...data,
-                    timestamp: new Date().toISOString(),
-                    ip: window.location.hostname
-                };
-                submissions.push(submission);
-                localStorage.setItem('mindfulSurveyData', JSON.stringify(submissions));
-                console.log('数据已保存到本地存储');
+                const response = await fetch(`${window.location.origin}/api/store-data`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(submission)
+                });
+                
+                if (response.ok) {
+                    console.log('数据已保存到服务器');
+                } else {
+                    throw new Error('服务器保存失败');
+                }
             } catch (error) {
-                console.error('保存到本地存储失败:', error);
+                console.error('保存到服务器失败，尝试本地存储:', error);
+                
+                // 如果服务器失败，保存到本地存储作为备份
+                try {
+                    const submissions = JSON.parse(localStorage.getItem('mindfulSurveyData') || '[]');
+                    submissions.push(submission);
+                    localStorage.setItem('mindfulSurveyData', JSON.stringify(submissions));
+                    console.log('数据已保存到本地存储');
+                } catch (localError) {
+                    console.error('本地存储也失败:', localError);
+                }
             }
         }
         
@@ -670,17 +659,17 @@
             if (isEligible) {
                 resultMessage.innerHTML = `
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <h3 style="color: #3498db; margin-bottom: 15px; font-size: 18px;">符合训练营条件</h3>
+                        <h3 style="color: #3498db; margin-bottom: 15px; font-size: 18px;">符合纳入训练营</h3>
                         <p style="margin-bottom: 15px; font-size: 14px;">您符合我们的训练营条件，请联系项目负责人加入训练营。</p>
-                        <p><strong>状态焦虑总分：</strong> ${stateTotal} 分</p>
-                        <p><strong>特质焦虑总分：</strong> ${traitTotal} 分</p>
+                        <p>A1-A2总分：${stateTotal} 分</p>
+                        <p>B1-B2总分：${traitTotal} 分</p>
                     </div>
                     <div class="success">${message}</div>
                 `;
                 
                 contactInfo.innerHTML = `
                     <div class="phone-number">
-                        联系项目负责人：<a href="tel:13925337675" style="color: #3498db; text-decoration: none; font-weight: bold;">13925337675</a>
+                        联系方式：<a href="tel:13925337675" style="color: #3498db; text-decoration: none; font-weight: bold;">13925337675</a>
                     </div>
                 `;
             } else {
@@ -689,15 +678,15 @@
                         <h3 style="color: #f39c12; margin-bottom: 15px; font-size: 18px;">感谢您的参与</h3>
                         <p style="margin-bottom: 15px; font-size: 14px;">感谢您此次的参与，因为人数有限，关注我们第二期的训练营招募。</p>
                         <p style="margin-bottom: 10px; font-size: 14px; color: #666;">请保持电话畅通，我们会在后续的训练营中优先联系您。</p>
-                        <p><strong>状态焦虑总分：</strong> ${stateTotal} 分</p>
-                        <p><strong>特质焦虑总分：</strong> ${traitTotal} 分</p>
+                        <p>A1-A2总分：${stateTotal} 分</p>
+                        <p>B1-B2总分：${traitTotal} 分</p>
                     </div>
                     <div class="success">${message}</div>
                 `;
                 
                 contactInfo.innerHTML = `
                     <div class="phone-number">
-                        联系电话：<a href="tel:13925337675" style="color: #3498db; text-decoration: none; font-weight: bold;">13925337675</a>
+                        联系方式：<a href="tel:13925337675" style="color: #3498db; text-decoration: none; font-weight: bold;">13925337675</a>
                     </div>
                 `;
             }
@@ -850,24 +839,24 @@
                     {
                         name: "测试用户1",
                         phone: "13800138000",
-                        stateAnxietyScores: [3, 3, 3, 3, 3], // 总分15 > 9.5
-                        traitAnxietyScores: [4, 4, 3, 3, 3], // 总分17 > 13.5
+                        stateAnxietyScores: [3, 3, 1, 1, 1], // A1-A2总分6 < 9.5
+                        traitAnxietyScores: [4, 4, 1, 1, 1], // B1-B2总分8 < 13.5
                         timestamp: "2025-11-18T15:23:49.731Z",
                         ip: "::1"
                     },
                     {
                         name: "测试用户2",
                         phone: "13900139000",
-                        stateAnxietyScores: [2, 2, 2, 2, 2], // 总分10 > 9.5
-                        traitAnxietyScores: [3, 3, 2, 3, 3], // 总分14 > 13.5
+                        stateAnxietyScores: [3, 4, 2, 2, 2], // A1-A2总分7 < 9.5
+                        traitAnxietyScores: [4, 4, 3, 3, 3], // B1-B2总分8 < 13.5
                         timestamp: "2025-11-18T15:27:16.699Z",
                         ip: "::1"
                     },
                     {
                         name: "测试用户3",
                         phone: "13700137000",
-                        stateAnxietyScores: [1, 2, 1, 2, 1], // 总分7 < 9.5
-                        traitAnxietyScores: [2, 2, 3, 2, 2], // 总分11 < 13.5
+                        stateAnxietyScores: [3, 4, 2, 2, 2], // A1-A2总分7 < 9.5
+                        traitAnxietyScores: [4, 4, 3, 3, 3], // B1-B2总分8 < 13.5
                         timestamp: "2025-11-18T15:53:53.923Z",
                         ip: "::1"
                     }

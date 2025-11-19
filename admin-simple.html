@@ -365,8 +365,8 @@
                                 <th>序号</th>
                                 <th>姓名</th>
                                 <th>电话</th>
-                                <th>状态分</th>
-                                <th>特质分</th>
+                                <th>A1-A2分</th>
+                                <th>B1-B2分</th>
                                 <th>总分</th>
                                 <th>评估结果</th>
                                 <th>提交时间</th>
@@ -374,10 +374,10 @@
                         </thead>
                         <tbody>
                             ${data.map((item, index) => {
-                                const stateTotal = item.stateTotal || (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
-                                const traitTotal = item.traitTotal || (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                                const stateTotal = item.stateTotal || (item.stateAnxietyScores || []).slice(0, 2).reduce((a, b) => a + b, 0);
+                                const traitTotal = item.traitTotal || (item.traitAnxietyScores || []).slice(0, 2).reduce((a, b) => a + b, 0);
                                 const total = stateTotal + traitTotal;
-                                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+                                const isEligible = stateTotal > 9.5 && traitTotal > 13.5;
                                 const time = item.timestamp ? new Date(item.timestamp).toLocaleString() : '未知';
 
                                 return `
@@ -428,7 +428,7 @@
                 
                 totalScore += total;
                 
-                if (stateTotal >= 10 && traitTotal >= 14) {
+                if (stateTotal > 9.5 && traitTotal > 13.5) {
                     eligibleCount++;
                 } else {
                     observeCount++;
@@ -481,7 +481,7 @@
                         const stateTotal = item.stateTotal || (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
                         const traitTotal = item.traitTotal || (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
                         const total = stateTotal + traitTotal;
-                        const isEligible = stateTotal >= 10 && traitTotal >= 14;
+                        const isEligible = stateTotal > 9.5 && traitTotal > 13.5;
                         const time = item.timestamp ? new Date(item.timestamp).toLocaleString() : '未知';
 
                         return `
@@ -516,7 +516,7 @@
                 const stateTotal = item.stateTotal || (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
                 const traitTotal = item.traitTotal || (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
                 const total = stateTotal + traitTotal;
-                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+                const isEligible = stateTotal > 9.5 && traitTotal > 13.5;
                 const time = item.timestamp ? new Date(item.timestamp).toLocaleString() : '未知';
                 
                 csv += `${index + 1},"${item.name || ''}","${item.phone || ''}",${stateTotal},${traitTotal},${total},"${isEligible ? '符合条件' : '待观察'}","${time}"\n`;
