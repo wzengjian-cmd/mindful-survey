@@ -44,6 +44,10 @@
       "dest": "/api/$1.js"
     },
     {
+      "src": "/admin-simple.html",
+      "dest": "/admin-simple.html"
+    },
+    {
       "src": "/all-data-view.html",
       "dest": "/all-data-view.html"
     },
@@ -58,6 +62,10 @@
     {
       "src": "/view-data.html",
       "dest": "/view-data.html"
+    },
+    {
+      "src": "/mobile-index.html",
+      "dest": "/mobile-index.html"
     },
     {
       "src": "/(.*)",

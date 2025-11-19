@@ -2,684 +2,1151 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8天正念呼吸训练营</title>
-    
-    <!-- 添加 Vercel Analytics 统计代码 -->
-    <script>
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>正念训练营心理评估问卷</title>
     <style>
         * {
-            box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
-        }
-        body {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f7fa;
-            color: #333;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
             line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
         }
+
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            min-height: calc(100vh - 20px);
+            display: flex;
+            flex-direction: column;
         }
-        h1, h2 {
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
             text-align: center;
-            color: #2c3e50;
         }
-        h1 {
+
+        .header h1 {
+            font-size: 1.8em;
             margin-bottom: 10px;
         }
-        h2 {
-            margin-bottom: 25px;
-            color: #3498db;
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
         }
+
+        .content {
+            padding: 25px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
         .page {
             display: none;
         }
-        .active {
+
+        .page.active {
             display: block;
         }
+
         .form-group {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
-            color: #2c3e50;
+            font-weight: 600;
+            color: #555;
         }
-        input[type="text"], input[type="tel"] {
+
+        input[type="text"],
+        input[type="tel"],
+        select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-        input:focus {
-            border-color: #3498db;
-            outline: none;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
-        }
-        .btn {
-            padding: 12px 25px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-right: 10px;
-            transition: background-color 0.3s;
-        }
-        .btn:hover {
-            background-color: #2980b9;
-        }
-        .btn:disabled {
-            background-color: #bdc3c7;
-            cursor: not-allowed;
-        }
-        .btn-container {
-            text-align: center;
-            margin-top: 30px;
-        }
-        .instructions {
-            background-color: #e8f4fd;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 25px;
-            border-left: 4px solid #3498db;
-        }
-        .scale-item {
-            margin-bottom: 25px;
             padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-        .scale-question {
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-        .scale-options {
-            display: flex;
-            justify-content: space-between;
-        }
-        .scale-option {
-            text-align: center;
-            width: 18%;
-            font-size: 14px;
-            padding: 5px;
-        }
-        .scale-option input {
-            margin-right: 5px;
-        }
-        .progress-bar {
-            height: 6px;
-            background-color: #e0e0e0;
-            border-radius: 3px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .progress {
-            height: 100%;
-            background-color: #3498db;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        .required::after {
-            content: " *";
-            color: #e74c3c;
-        }
-        .contact-info {
-            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
-            padding: 20px;
+            border: 2px solid #e0e0e0;
             border-radius: 10px;
-            margin: 20px 0;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .question {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .question h4 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .option {
             display: flex;
             align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
             justify-content: center;
         }
-        .phone-section {
+
+        .option:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        .option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .nav-buttons {
             display: flex;
-            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
         }
-        .phone-icon {
-            font-size: 40px;
-            color: #e74c3c;
-            margin-right: 15px;
+
+        .progress-indicator {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
         }
-        .phone-number {
-            font-size: 24px;
-            font-weight: bold;
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
-        .phone-note {
-            font-size: 14px;
-            margin-top: 5px;
+
+        .progress-step {
+            width: 20%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            transition: background 0.3s;
         }
-        .result-message {
+
+        .progress-step.active {
+            background: #667eea;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
             text-align: center;
             margin-bottom: 20px;
-            font-size: 16px;
         }
-        .loading {
-            display: none;
+
+        .result-card.warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+
+        .contact-info {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 12px;
             text-align: center;
-            margin: 10px 0;
         }
-        .loading-spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 2s linear infinite;
-            margin: 0 auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .error {
-            color: #e74c3c;
-            background-color: #fdf2f2;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #e74c3c;
-            margin: 10px 0;
-        }
-        .success {
+
+        .contact-info h3 {
             color: #27ae60;
-            background-color: #f0fdf4;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .contact-phone {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #27ae60;
             margin: 10px 0;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .container {
+                border-radius: 15px;
+                min-height: calc(100vh - 10px);
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .options {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+
+        /* 管理员隐藏按钮 - 只在特定条件下显示 */
+        .admin-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 12px;
+            display: none; /* 默认隐藏 */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 进度条 -->
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
+        <div class="header">
+            <h1>🧘 正念训练营心理评估</h1>
+            <p>专业心理状态评估，帮助您更好地了解自己</p>
         </div>
-        
-        <!-- 第1页：知情同意 -->
-        <div id="page1" class="page active">
-            <h1>8天正念呼吸训练营</h1>
-            <div class="instructions">
-                <p>您好！</p>
-                <p>本研究是一项为期8天的正念呼吸训练营。该训练旨在帮助参与者学习通过简单的呼吸练习来调节情绪、缓解压力。</p>
-                <p>在开始之前，请您知悉：</p>
-                <ul>
-                    <li><strong>研究目的：</strong>本次调查是为了找到最能从本训练中受益的参与者，以确保训练效果。</li>
-                    <li><strong>数据使用：</strong>您提供的所有信息将严格保密，并仅用于本次训练与研究分析。</li>
-                    <li><strong>自愿参与：</strong>您的参与是完全自愿的。您可以根据自己的意愿决定是否参加。</li>
-                </ul>
+
+        <!-- 管理员按钮 - 默认隐藏 -->
+        <button class="admin-btn" onclick="showAdminPanel()">📊 管理后台</button>
+
+        <div class="content">
+            <!-- 第1页：基本信息 -->
+            <div class="page active" id="page1">
+                <div class="progress-indicator">
+                    <div class="progress-bar">
+                        <div class="progress-step active"></div>
+                        <div class="progress-step"></div>
+                        <div class="progress-step"></div>
+                        <div class="progress-step"></div>
+                        <div class="progress-step"></div>
+                    </div>
+                    <p>步骤 1/5：基本信息</p>
+                </div>
+
+                <h2>基本信息</h2>
+                <div class="form-group">
+                    <label for="name">姓名 *</label>
+                    <input type="text" id="name" placeholder="请输入您的姓名" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">联系电话 *</label>
+                    <input type="tel" id="phone" placeholder="请输入您的手机号码" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="grade">年级</label>
+                    <select id="grade">
+                        <option value="">请选择年级</option>
+                        <option value="1">大一</option>
+                        <option value="2">大二</option>
+                        <option value="3">大三</option>
+                        <option value="4">大四</option>
+                        <option value="graduate">研究生</option>
+                        <option value="other">其他</option>
+                    </select>
+                </div>
             </div>
-            <div class="btn-container">
-                <button class="btn" onclick="showPage(2)">我已阅读并同意参与</button>
-                <button class="btn" onclick="exitStudy()" style="background-color: #e74c3c;">退出</button>
+
+            <!-- 第2页：状态焦虑评估 -->
+            <div class="page" id="page2">
+                <div class="progress-indicator">
+                    <div class="progress-bar">
+                        <div class="progress-step active"></div>
+                        <div class="progress-step active"></div>
+                        <div class="progress-step"></div>
+                        <div class="progress-step"></div>
+                        <div class="progress-step"></div>
+                    </div>
+                    <p>步骤 2/5：状态焦虑评估</p>
+                </div>
+
+                <h2>状态焦虑评估</h2>
+                <p>请根据您最近一周的感受选择最符合的选项：</p>
+
+                <div class="question">
+                    <h4>1. 我感到心情平静</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="state1" value="1">
+                            <span>完全没有</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state1" value="2">
+                            <span>有些时候</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state1" value="3">
+                            <span>经常如此</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state1" value="4">
+                            <span>总是如此</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>2. 我感到紧张或不安</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="state2" value="1">
+                            <span>完全没有</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state2" value="2">
+                            <span>有些时候</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state2" value="3">
+                            <span>经常如此</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state2" value="4">
+                            <span>总是如此</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>3. 我感到轻松</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="state3" value="1">
+                            <span>完全没有</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state3" value="2">
+                            <span>有些时候</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state3" value="3">
+                            <span>经常如此</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state3" value="4">
+                            <span>总是如此</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>4. 我感到烦恼</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="state4" value="1">
+                            <span>完全没有</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state4" value="2">
+                            <span>有些时候</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state4" value="3">
+                            <span>经常如此</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state4" value="4">
+                            <span>总是如此</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>5. 我感到自信</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="state5" value="1">
+                            <span>完全没有</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state5" value="2">
+                            <span>有些时候</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state5" value="3">
+                            <span>经常如此</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="state5" value="4">
+                            <span>总是如此</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第3页：特质焦虑评估 -->
+            <div class="page" id="page3">
+                <div class="progress-indicator">
+                    <div class="progress-bar">
+                        <div class="progress-step active"></div>
+                        <div class="progress-step active"></div>
+                        <div class="progress-step active"></div>
+                        <div class="progress-step"></div>
+                        <div class="progress-step"></div>
+                    </div>
+                    <p>步骤 3/5：特质焦虑评估</p>
+                </div>
+
+                <h2>特质焦虑评估</h2>
+                <p>请根据您通常的情况选择最符合的选项：</p>
+
+                <div class="question">
+                    <h4>1. 我通常感到快乐</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="trait1" value="1">
+                            <span>几乎没有</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait1" value="2">
+                            <span>有时候</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait1" value="3">
+                            <span>经常如此</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait1" value="4">
+                            <span>几乎总是</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>2. 我通常感到紧张</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="trait2" value="1">
+                            <span>几乎没有</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait2" value="2">
+                            <span>有时候</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait2" value="3">
+                            <span>经常如此</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait2" value="4">
+                            <span>几乎总是</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>3. 我通常感到满意</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="trait3" value="1">
+                            <span>几乎没有</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait3" value="2">
+                            <span>有时候</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait3" value="3">
+                            <span>经常如此</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait3" value="4">
+                            <span>几乎总是</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>4. 我通常感到担忧</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="trait4" value="1">
+                            <span>几乎没有</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait4" value="2">
+                            <span>有时候</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait4" value="3">
+                            <span>经常如此</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait4" value="4">
+                            <span>几乎总是</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>5. 我通常感到平静</h4>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="trait5" value="1">
+                            <span>几乎没有</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait5" value="2">
+                            <span>有时候</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait5" value="3">
+                            <span>经常如此</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="trait5" value="4">
+                            <span>几乎总是</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第4页：联系方式 -->
+            <div class="page" id="page4">
+                <div class="progress-indicator">
+                    <div class="progress-bar">
+                        <div class="progress-step active"></div>
+                        <div class="progress-step active"></div>
+                        <div class="progress-step active"></div>
+                        <div class="progress-step active"></div>
+                        <div class="progress-step"></div>
+                    </div>
+                    <p>步骤 4/5：联系方式确认</p>
+                </div>
+
+                <h2>联系方式确认</h2>
+                <p>请确认您的联系方式，以便我们与您联系：</p>
+
+                <div class="form-group">
+                    <label>姓名确认</label>
+                    <div style="padding: 15px; background: #f8f9fa; border-radius: 8px; font-size: 16px;" id="confirm-name">
+                        ---
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>电话确认</label>
+                    <div style="padding: 15px; background: #f8f9fa; border-radius: 8px; font-size: 16px;" id="confirm-phone">
+                        ---
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>重要提醒</label>
+                    <div style="padding: 15px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
+                        <p><strong>📞 请确保电话号码正确，我们将通过电话与您联系后续事宜。</strong></p>
+                        <p>✅ 所有信息将严格保密</p>
+                        <p>✅ 仅用于正念训练营项目联系</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第5页：评估结果 -->
+            <div class="page" id="page5">
+                <div class="progress-indicator">
+                    <div class="progress-bar">
+                        <div class="progress-step active"></div>
+                        <div class="progress-step active"></div>
+                        <div class="progress-step active"></div>
+                        <div class="progress-step active"></div>
+                        <div class="progress-step active"></div>
+                    </div>
+                    <p>步骤 5/5：评估完成</p>
+                </div>
+
+                <h2>评估结果</h2>
+                
+                <div id="result-content">
+                    <!-- 结果将在这里显示 -->
+                </div>
             </div>
         </div>
-        
-        <!-- 第2页：基本信息 -->
-        <div id="page2" class="page">
-            <h2>基本信息登记</h2>
-            <div class="instructions">
-                <p>感谢您的参与！为了更好地安排训练事宜，请在下方填写您的基本信息。</p>
-            </div>
-            <div class="form-group">
-                <label for="name" class="required">姓名</label>
-                <input type="text" id="name" placeholder="请输入您的姓名">
-            </div>
-            <div class="form-group">
-                <label for="phone" class="required">联系电话</label>
-                <input type="tel" id="phone" placeholder="请输入您的联系电话">
-            </div>
-            <div class="btn-container">
-                <button class="btn" onclick="showPage(1)">上一步</button>
-                <button class="btn" onclick="validateBasicInfo()">下一步</button>
-            </div>
-        </div>
-        
-        <!-- 第3页：状态焦虑量表 -->
-        <div id="page3" class="page">
-            <h2>心理状态评估</h2>
-            <div class="instructions">
-                <p>请根据您<strong>此时此刻</strong>的感受，评价下面的陈述。</p>
-            </div>
-            
-            <div class="scale-item">
-                <div class="scale-question">A1 我感到烦恼</div>
-                <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="a1" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="a1" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="a1" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="a1" value="4"> 4<br>非常明显</div>
-                </div>
-            </div>
-            
-            <div class="scale-item">
-                <div class="scale-question">A2 我感到害怕</div>
-                <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="a2" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="a2" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="a2" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="a2" value="4"> 4<br>非常明显</div>
-                </div>
-            </div>
-            
-            <div class="scale-item">
-                <div class="scale-question">A3 我感到慌乱</div>
-                <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="a3" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="a3" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="a3" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="a3" value="4"> 4<br>非常明显</div>
-                </div>
-            </div>
-            
-            <div class="scale-item">
-                <div class="scale-question">A4 我极度紧张不安</div>
-                <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="a4" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="a4" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="a4" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="a4" value="4"> 4<br>非常明显</div>
-                </div>
-            </div>
-            
-            <div class="scale-item">
-                <div class="scale-question">A5 我感到困惑</div>
-                <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="a5" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="a5" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="a5" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="a5" value="4"> 4<br>非常明显</div>
-                </div>
-            </div>
-            
-            <div class="btn-container">
-                <button class="btn" onclick="showPage(2)">上一步</button>
-                <button class="btn" onclick="validateStateAnxiety()">下一步</button>
-            </div>
-        </div>
-        
-        <!-- 第4页：特质焦虑量表 -->
-        <div id="page4" class="page">
-            <h2>心理状态评估</h2>
-            <div class="instructions">
-                <p>请根据您<strong>平时或一般情况下</strong>的感受，评价下面的陈述。</p>
-            </div>
-            
-            <div class="scale-item">
-                <div class="scale-question">B1 我感到困难一一堆集起来，因此无法克服</div>
-                <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="b1" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="b1" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="b1" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="b1" value="4"> 4<br>非常明显</div>
-                </div>
-            </div>
-            
-            <div class="scale-item">
-                <div class="scale-question">B2 我过分忧虑一些事，实际上这些事无关紧要</div>
-                <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="b2" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="b2" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="b2" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="b2" value="4"> 4<br>非常明显</div>
-                </div>
-            </div>
-            
-            <div class="scale-item">
-                <div class="scale-question">B3 一些不重要的思想总是缠绕着我，并打扰我</div>
-                <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="b3" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="b3" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="b3" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="b3" value="4"> 4<br>非常明显</div>
-                </div>
-            </div>
-            
-            <div class="scale-item">
-                <div class="scale-question">B4 我产生的沮丧是如此强烈，以致我不能从思想中排除它们</div>
-                <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="b4" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="b4" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="b4" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="b4" value="4"> 4<br>非常明显</div>
-                </div>
-            </div>
-            
-            <div class="scale-item">
-                <div class="scale-question">B5 当我考虑我目前的事情和利益时，我就陷入紧张状态</div>
-                <div class="scale-options">
-                    <div class="scale-option"><input type="radio" name="b5" value="1"> 1<br>完全没有</div>
-                    <div class="scale-option"><input type="radio" name="b5" value="2"> 2<br>有些</div>
-                    <div class="scale-option"><input type="radio" name="b5" value="3"> 3<br>中等程度</div>
-                    <div class="scale-option"><input type="radio" name="b5" value="4"> 4<br>非常明显</div>
-                </div>
-            </div>
-            
-            <div class="loading" id="loading">
-                <div class="loading-spinner"></div>
-                <p>正在提交数据，请稍候...</p>
-            </div>
-            
-            <div id="submitError" class="error" style="display: none;"></div>
-            
-            <div class="btn-container">
-                <button class="btn" onclick="showPage(3)">上一步</button>
-                <button class="btn" onclick="calculateResults()" id="submitBtn">提交</button>
-            </div>
-        </div>
-        
-        <!-- 第5页：结果页面 -->
-        <div id="page5" class="page">
-            <h2>评估结果</h2>
-            <div class="result-message" id="resultMessage"></div>
-            <div class="contact-info" id="contactInfo"></div>
-            <div class="btn-container">
-                <button class="btn" onclick="restartSurvey()">重新开始</button>
-            </div>
+
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousPage()" style="display: none;">上一步</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextPage()">下一步</button>
+            <button class="btn btn-primary" id="submitBtn" onclick="submitAssessment()" style="display: none;">提交评估</button>
         </div>
     </div>
 
     <script>
-        // 全局变量存储用户数据
-        let userData = {
-            name: '',
-            phone: '',
-            stateAnxietyScores: [],
-            traitAnxietyScores: []
-        };
-        
-        // 页面显示控制
+        let currentPage = 1;
+        const totalPages = 5;
+
+        // 页面初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgressBar(1);
+            setupRadioButtons();
+            checkAdminAccess();
+            
+            // 添加测试数据到本地存储
+            const storedData = localStorage.getItem('mindfulSurveyData');
+            if (!storedData) {
+                const testData = [
+                    {
+                        name: "wzj",
+                        phone: "13710077285",
+                        stateAnxietyScores: [3, 3, 3, 3, 3],
+                        traitAnxietyScores: [3, 3, 3, 3, 3],
+                        timestamp: "2025-11-18T15:23:49.731Z",
+                        ip: "::1"
+                    },
+                    {
+                        name: "wzj",
+                        phone: "13710077285",
+                        stateAnxietyScores: [3, 3, 3, 3, 3],
+                        traitAnxietyScores: [3, 3, 3, 3, 3],
+                        timestamp: "2025-11-18T15:27:16.699Z",
+                        ip: "::1"
+                    },
+                    {
+                        name: "wzj",
+                        phone: "13710077285",
+                        stateAnxietyScores: [3, 3, 3, 3, 3],
+                        traitAnxietyScores: [3, 3, 3, 3, 3],
+                        timestamp: "2025-11-18T15:53:53.923Z",
+                        ip: "::1"
+                    }
+                ];
+                localStorage.setItem('mindfulSurveyData', JSON.stringify(testData));
+                console.log('已添加测试数据');
+            }
+        });
+
+        // 检查管理员访问权限
+        function checkAdminAccess() {
+            // 检查URL参数中是否有admin=true
+            const urlParams = new URLSearchParams(window.location.search);
+            const isAdmin = urlParams.get('admin') === 'true' || 
+                          localStorage.getItem('adminAccess') === 'true';
+            
+            if (isAdmin) {
+                document.querySelector('.admin-btn').style.display = 'block';
+            }
+        }
+
+        // 显示管理面板
+        function showAdminPanel() {
+            const adminUrl = window.location.origin + window.location.pathname + '?admin=true';
+            window.location.href = adminUrl;
+        }
+
+        // 设置单选按钮交互
+        function setupRadioButtons() {
+            document.querySelectorAll('.options').forEach(optionsContainer => {
+                optionsContainer.addEventListener('change', function(e) {
+                    if (e.target.type === 'radio') {
+                        // 移除同一组中所有选项的选中样式
+                        optionsContainer.querySelectorAll('.option').forEach(option => {
+                            option.classList.remove('selected');
+                        });
+                        // 添加选中样式到当前选项
+                        e.target.closest('.option').classList.add('selected');
+                    }
+                });
+            });
+        }
+
+        function updateProgressBar(page) {
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                if (index < page) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+        }
+
         function showPage(pageNumber) {
-            // 隐藏所有页面
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            
-            // 显示目标页面
             document.getElementById(`page${pageNumber}`).classList.add('active');
             
-            // 更新进度条
+            // 更新导航按钮
+            document.getElementById('prevBtn').style.display = pageNumber === 1 ? 'none' : 'inline-block';
+            document.getElementById('nextBtn').style.display = pageNumber === totalPages ? 'none' : 'inline-block';
+            document.getElementById('submitBtn').style.display = pageNumber === totalPages ? 'inline-block' : 'none';
+            
+            // 如果是第4页，更新确认信息
+            if (pageNumber === 4) {
+                updateConfirmationInfo();
+            }
+            
             updateProgressBar(pageNumber);
         }
-        
-        // 更新进度条
-        function updateProgressBar(currentPage) {
-            const totalPages = 5;
-            const progressPercentage = ((currentPage - 1) / (totalPages - 1)) * 100;
-            document.getElementById('progress').style.width = `${progressPercentage}%`;
-        }
-        
-        // 退出研究
-        function exitStudy() {
-            if (confirm('您确定要退出研究吗？')) {
-                alert('感谢您的关注！');
-            }
-        }
-        
-        // 验证基本信息
-        function validateBasicInfo() {
-            const name = document.getElementById('name').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            
-            if (!name) {
-                alert('请输入您的姓名');
-                return;
-            }
-            
-            if (!phone) {
-                alert('请输入您的联系电话');
-                return;
-            }
-            
-            // 简单的电话号码验证
-            if (!/^1[3-9]\d{9}$/.test(phone)) {
-                alert('请输入有效的手机号码');
-                return;
-            }
-            
-            // 保存基本信息
-            userData.name = name;
-            userData.phone = phone;
-            
-            // 跳转到下一页
-            showPage(3);
-        }
-        
-        // 验证状态焦虑量表
-        function validateStateAnxiety() {
-            const questions = ['a1', 'a2', 'a3', 'a4', 'a5'];
-            let allAnswered = true;
-            userData.stateAnxietyScores = [];
-            
-            for (let question of questions) {
-                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedOption) {
-                    userData.stateAnxietyScores.push(parseInt(selectedOption.value));
-                } else {
-                    allAnswered = false;
-                    break;
-                }
-            }
-            
-            if (!allAnswered) {
-                alert('请完成所有题目');
-                return;
-            }
-            
-            // 跳转到下一页
-            showPage(4);
-        }
-        
-        // 计算并显示结果
-        async function calculateResults() {
-            const questions = ['b1', 'b2', 'b3', 'b4', 'b5'];
-            let allAnswered = true;
-            userData.traitAnxietyScores = [];
-            
-            for (let question of questions) {
-                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedOption) {
-                    userData.traitAnxietyScores.push(parseInt(selectedOption.value));
-                } else {
-                    allAnswered = false;
-                    break;
-                }
-            }
-            
-            if (!allAnswered) {
-                alert('请完成所有题目');
-                return;
-            }
-            
-            // 计算总分
-            const stateTotal = userData.stateAnxietyScores.reduce((a, b) => a + b, 0);
-            const traitTotal = userData.traitAnxietyScores.reduce((a, b) => a + b, 0);
-            const isEligible = stateTotal >= 10 && traitTotal >= 14;
-            
-            // 显示加载动画
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('submitBtn').disabled = true;
-            document.getElementById('submitError').style.display = 'none';
-            
-            // 1. 保存到本地存储
-            saveToLocalStorage(userData);
-            
-            // 2. 尝试提交到服务器
-            let serverSuccess = false;
-            let serverMessage = '';
-            
-            try {
-                console.log('准备提交数据:', userData);
-                
-                const API_BASE = window.location.origin;
-                
-                let response, result;
-                try {
-                    response = await fetch(`${API_BASE}/api/store-data`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(userData)
-                    });
-                    result = await response.json();
-                    
-                    console.log('API响应:', result);
-                    
-                    if (response.ok && result.success) {
-                        serverSuccess = true;
-                        serverMessage = '✅ 数据提交成功，我们会尽快与您联系。';
-                    } else {
-                        throw new Error(result.error || 'API返回错误');
-                    }
-                } catch (apiError) {
-                    console.log('API提交失败:', apiError);
-                    serverMessage = '⚠️ 服务器暂时不可用，但数据已保存在本地';
-                }
-                
-            } catch (error) {
-                console.error('处理数据时出错:', error);
-                serverMessage = '⚠️ 网络问题，但数据已安全保存在本地';
-            }
-            
-            // 3. 显示结果
-            showResults(isEligible, stateTotal, traitTotal, serverMessage);
-            
-            // 4. 隐藏加载动画
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('submitBtn').disabled = false;
-        }
-        
-        // 保存到本地存储
-        function saveToLocalStorage(data) {
-            try {
-                const submissions = JSON.parse(localStorage.getItem('mindfulSurveyData') || '[]');
-                const submission = {
-                    ...data,
-                    timestamp: new Date().toISOString()
-                };
-                submissions.push(submission);
-                localStorage.setItem('mindfulSurveyData', JSON.stringify(submissions));
-                console.log('数据已保存到本地存储');
-            } catch (error) {
-                console.error('保存到本地存储失败:', error);
-            }
-        }
-        
-        // 显示结果页面
-        function showResults(isEligible, stateTotal, traitTotal, message = '') {
-            const resultMessage = document.getElementById('resultMessage');
-            const contactInfo = document.getElementById('contactInfo');
-            
-            let resultHtml = `
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <p><strong>状态焦虑总分：</strong> ${stateTotal} 分</p>
-                    <p><strong>特质焦虑总分：</strong> ${traitTotal} 分</p>
-                </div>
-            `;
-            
-            if (message) {
-                resultHtml += `<div class="${message.includes('成功') ? 'success' : 'error'}" style="margin-bottom: 20px;">${message}</div>`;
-            }
-            
-            const submitSuccessMsg = message && message.includes('成功') ? 
-                `<div class="success" style="margin-bottom: 20px;">✅ 数据提交成功</div>` : '';
 
-            if (isEligible) {
-                resultHtml = `
-                    <div style="text-align: center; margin-bottom: 25px;">
-                        <h3 style="color: #3498db; margin-bottom: 15px; font-size: 20px;">符合训练营条件</h3>
-                        <p style="margin-bottom: 25px; font-size: 16px;">您符合我们的训练营条件，请联系项目负责人加入训练营。</p>
-                    </div>
-                    ${submitSuccessMsg}
-                    
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <p><strong>状态焦虑总分：</strong> ${stateTotal} 分</p>
-                        <p><strong>特质焦虑总分：</strong> ${traitTotal} 分</p>
-                    </div>
-                `;
+        function updateConfirmationInfo() {
+            const name = document.getElementById('name').value || '未填写';
+            const phone = document.getElementById('phone').value || '未填写';
+            
+            document.getElementById('confirm-name').textContent = name;
+            document.getElementById('confirm-phone').textContent = phone;
+        }
+
+        function nextPage() {
+            if (validateCurrentPage()) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        }
+
+        function previousPage() {
+            currentPage--;
+            showPage(currentPage);
+        }
+
+        function validateCurrentPage() {
+            if (currentPage === 1) {
+                const name = document.getElementById('name').value.trim();
+                const phone = document.getElementById('phone').value.trim();
                 
-                contactInfo.innerHTML = `
-                    <div style="text-align: center; padding: 30px; background-color: #f8f9fa; border-radius: 10px;">
-                        <p style="font-size: 18px; color: #2c3e50; margin-bottom: 20px;">
-                            请联系项目负责人（<a href="tel:13925337675" style="color: #3498db; text-decoration: none; font-weight: bold;">13925337675</a>）加入训练营
-                        </p>
-                    </div>
-                `;
-            } else {
-                resultHtml = `
-                    <div style="text-align: center; margin-bottom: 25px;">
-                        <h3 style="color: #f39c12; margin-bottom: 15px; font-size: 20px;">感谢您的参与</h3>
-                        <p style="margin-bottom: 15px; font-size: 16px;">感谢您此次的参与，因为人数有限，关注我们第二期的训练营招募。</p>
-                        <p style="margin-bottom: 20px; font-size: 16px; color: #666;">请保持电话畅通，我们会在后续的训练营中优先联系您。</p>
-                    </div>
-                    ${submitSuccessMsg}
-                    
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <p><strong>状态焦虑总分：</strong> ${stateTotal} 分</p>
-                        <p><strong>特质焦虑总分：</strong> ${traitTotal} 分</p>
-                    </div>
-                `;
+                if (!name) {
+                    showMessage('请填写姓名', 'error');
+                    return false;
+                }
                 
-                contactInfo.innerHTML = `
-                    <div style="text-align: center; padding: 20px; background-color: #e8f4fd; border-radius: 10px;">
-                        <a href="tel:13925337675" class="btn" style="background-color: #3498db;">
-                            📞 13925337675
-                        </a>
-                    </div>
-                `;
+                if (!phone) {
+                    showMessage('请填写联系电话', 'error');
+                    return false;
+                }
+                
+                if (!/^1[3-9]\d{9}$/.test(phone)) {
+                    showMessage('请填写正确的手机号码', 'error');
+                    return false;
+                }
             }
             
-            resultMessage.innerHTML = resultHtml;
-            showPage(5);
-        }
-        
-        // 重新开始调查
-        function restartSurvey() {
-            // 重置表单和数据
-            document.querySelectorAll('input').forEach(input => {
-                if (input.type === 'radio') {
-                    input.checked = false;
-                } else {
-                    input.value = '';
+            if (currentPage === 2) {
+                if (!validateQuestions('state')) {
+                    showMessage('请回答所有状态焦虑问题', 'error');
+                    return false;
                 }
-            });
+            }
             
-            // 隐藏错误信息
-            document.getElementById('submitError').style.display = 'none';
+            if (currentPage === 3) {
+                if (!validateQuestions('trait')) {
+                    showMessage('请回答所有特质焦虑问题', 'error');
+                    return false;
+                }
+            }
             
-            userData = {
-                name: '',
-                phone: '',
-                stateAnxietyScores: [],
-                traitAnxietyScores: []
+            return true;
+        }
+
+        function validateQuestions(type) {
+            const questions = type === 'state' ? 5 : 5;
+            for (let i = 1; i <= questions; i++) {
+                const answer = document.querySelector(`input[name="${type}${i}"]:checked`);
+                if (!answer) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function calculateScores() {
+            // 计算状态焦虑分数 (注意：反向计分)
+            const stateScores = [];
+            for (let i = 1; i <= 5; i++) {
+                const answer = document.querySelector(`input[name="state${i}"]:checked`);
+                if (answer) {
+                    let score = parseInt(answer.value);
+                    // 第1、3、5题是正向计分，第2、4题是反向计分
+                    if (i === 2 || i === 4) {
+                        score = 5 - score; // 反向计分
+                    }
+                    stateScores.push(score);
+                }
+            }
+            
+            // 计算特质焦虑分数
+            const traitScores = [];
+            for (let i = 1; i <= 5; i++) {
+                const answer = document.querySelector(`input[name="trait${i}"]:checked`);
+                if (answer) {
+                    let score = parseInt(answer.value);
+                    // 第1、3、5题是正向计分，第2、4题是反向计分
+                    if (i === 2 || i === 4) {
+                        score = 5 - score; // 反向计分
+                    }
+                    traitScores.push(score);
+                }
+            }
+            
+            return {
+                stateTotal: stateScores.reduce((a, b) => a + b, 0),
+                traitTotal: traitScores.reduce((a, b) => a + b, 0),
+                stateScores: stateScores,
+                traitScores: traitScores
+            };
+        }
+
+        function submitAssessment() {
+            if (!validateCurrentPage()) {
+                return;
+            }
+            
+            const scores = calculateScores();
+            const isEligible = scores.stateTotal >= 10 && scores.traitTotal >= 14;
+            
+            // 收集数据
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                grade: document.getElementById('grade').value,
+                ...scores,
+                isEligible: isEligible,
+                timestamp: new Date().toISOString(),
+                ip: window.location.hostname
             };
             
-            // 回到第一页
-            showPage(1);
+            // 保存到本地存储
+            saveToLocalDatabase(formData);
+            
+            // 显示结果
+            showResult(formData);
+            
+            // 显示第5页
+            currentPage = 5;
+            showPage(currentPage);
         }
 
-        // 初始化页面
-        document.addEventListener('DOMContentLoaded', function() {
-            updateProgressBar(1);
-        });
+        function saveToLocalDatabase(data) {
+            // 从本地存储获取现有数据
+            const existingData = JSON.parse(localStorage.getItem('mindfulSurveyData') || '[]');
+            
+            // 添加新数据
+            existingData.push(data);
+            
+            // 保存回本地存储
+            localStorage.setItem('mindfulSurveyData', JSON.stringify(existingData));
+            
+            // 尝试同步到服务器（如果可用）
+            syncToServer(data);
+        }
+
+        function syncToServer(data) {
+            // 尝试将数据发送到服务器
+            fetch('/api/store-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('数据同步到服务器成功:', result);
+            })
+            .catch(error => {
+                console.log('数据同步到服务器失败，数据已保存在本地:', error);
+            });
+        }
+
+        function showResult(data) {
+            const resultContent = document.getElementById('result-content');
+            
+            const resultCard = document.createElement('div');
+            resultCard.className = `result-card ${data.isEligible ? '' : 'warning'}`;
+            
+            const resultTitle = data.isEligible ? '🎉 符合条件' : '⏳ 待观察';
+            const resultMessage = data.isEligible ? 
+                '根据评估结果，您符合正念训练营的参与条件。' : 
+                '根据评估结果，我们建议您继续观察，如有需要可联系我们的专业团队。';
+            
+            resultCard.innerHTML = `
+                <h3>${resultTitle}</h3>
+                <p>状态焦虑得分：${data.stateTotal}分</p>
+                <p>特质焦虑得分：${data.traitTotal}分</p>
+                <p>总分：${data.stateTotal + data.traitTotal}分</p>
+                <hr style="margin: 15px 0; border: none; border-top: 1px solid rgba(255,255,255,0.3);">
+                <p>${resultMessage}</p>
+            `;
+            
+            const contactInfo = document.createElement('div');
+            contactInfo.className = 'contact-info';
+            contactInfo.innerHTML = `
+                <h3>📞 联系我们</h3>
+                <p>如需了解更多信息或预约咨询，请联系：</p>
+                <div class="contact-phone">13925337675</div>
+                <p>我们会在24小时内与您联系</p>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
+                    ✅ 评估已完成<br>
+                    ✅ 信息已记录<br>
+                    ✅ 我们会尽快联系您
+                </p>
+            `;
+            
+            resultContent.innerHTML = '';
+            resultContent.appendChild(resultCard);
+            resultContent.appendChild(contactInfo);
+        }
+
+        function showMessage(message, type = 'info') {
+            // 创建消息元素
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'error' ? 'error-message' : 'info-message';
+            messageDiv.textContent = message;
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 9999;
+                padding: 15px 20px;
+                border-radius: 8px;
+                max-width: 80%;
+                text-align: center;
+                animation: slideDown 0.3s ease;
+            `;
+            
+            document.body.appendChild(messageDiv);
+            
+            // 3秒后自动移除
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.parentNode.removeChild(messageDiv);
+                }
+            }, 3000);
+        }
+
+        // 管理员功能
+        function viewAdminData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('admin') === 'true') {
+                showDataPanel();
+            }
+        }
+
+        function showDataPanel() {
+            const storedData = localStorage.getItem('mindfulSurveyData');
+            const data = storedData ? JSON.parse(storedData) : [];
+            
+            if (data.length === 0) {
+                alert('暂无数据');
+                return;
+            }
+
+            // 创建数据面板
+            const panel = document.createElement('div');
+            panel.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 9999;
+                padding: 20px;
+                overflow-y: auto;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                margin: 50px auto;
+                max-width: 1000px;
+                padding: 30px;
+                border-radius: 10px;
+                max-height: 80vh;
+                overflow-y: auto;
+            `;
+            
+            content.innerHTML = `
+                <h2 style="text-align: center; margin-bottom: 20px;">📊 数据管理后台</h2>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <p>共 ${data.length} 条记录</p>
+                    <button onclick="exportData()" style="background: #27ae60; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; margin: 5px;">📥 导出Excel</button>
+                    <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #e74c3c; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; margin: 5px;">❌ 关闭</button>
+                </div>
+                ${generateDataTable(data)}
+            `;
+            
+            panel.appendChild(content);
+            document.body.appendChild(panel);
+        }
+
+        function generateDataTable(data) {
+            let tableHtml = `
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                    <thead>
+                        <tr style="background: #3498db; color: white;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">序号</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">姓名</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">电话</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">状态分</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">特质分</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">总分</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">结果</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach((item, index) => {
+                const stateTotal = item.stateTotal || (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = item.traitTotal || (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const total = stateTotal + traitTotal;
+                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+
+                tableHtml += `
+                    <tr style="${isEligible ? 'background: #d4edda;' : 'background: #fff3cd;'}">
+                        <td style="padding: 10px; border: 1px solid #ddd;">${index + 1}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${item.name || '未知'}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${item.phone || '未填写'}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${stateTotal}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${traitTotal}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>${total}</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${isEligible ? '✅ 符合条件' : '⏳ 待观察'}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${item.timestamp ? new Date(item.timestamp).toLocaleString() : '未知'}</td>
+                    </tr>
+                `;
+            });
+
+            tableHtml += '</tbody></table>';
+            return tableHtml;
+        }
+
+        function exportData() {
+            const storedData = localStorage.getItem('mindfulSurveyData');
+            const data = storedData ? JSON.parse(storedData) : [];
+            
+            if (data.length === 0) {
+                alert('暂无数据可导出');
+                return;
+            }
+
+            let csv = '序号,姓名,电话,状态焦虑分,特质焦虑分,总分,评估结果,提交时间\n';
+            
+            data.forEach((item, index) => {
+                const stateTotal = item.stateTotal || (item.stateAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const traitTotal = item.traitTotal || (item.traitAnxietyScores || []).reduce((a, b) => a + b, 0);
+                const total = stateTotal + traitTotal;
+                const isEligible = stateTotal >= 10 && traitTotal >= 14;
+                
+                csv += `${index + 1},"${item.name || ''}","${item.phone || ''}",${stateTotal},${traitTotal},${total},"${isEligible ? '符合条件' : '待观察'}","${item.timestamp || ''}"\n`;
+            });
+
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `正念训练营数据_${new Date().toLocaleDateString()}.csv`;
+            link.click();
+        }
+
+        // 检查是否需要显示管理界面
+        if (window.location.search.includes('admin=true')) {
+            viewAdminData();
+        }
     </script>
+
+    <style>
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+    </style>
 </body>
 </html>
